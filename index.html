@@ -74,30 +74,10 @@
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
     }
 
-    .lore-toggle {
-      position: absolute;
-      top: 96px;
-      left: 20px;
-      z-index: 600;
-      width: 64px;
-      height: 64px;
-      border: none;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.72);
-      color: #fff;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      font-size: 30px;
-      font-weight: 700;
-      line-height: 64px;
-      text-align: center;
-      cursor: pointer;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-    }
-
     .help-backdrop {
       position: fixed;
       inset: 0;
-      z-index: 550;
+      z-index: 650;
       background: rgba(0, 0, 0, 0.65);
       display: none;
       align-items: center;
@@ -110,30 +90,165 @@
     }
 
     .help-dialog {
-      width: min(980px, 95vw);
-      max-height: min(85vh, 900px);
+      --green: #8de971;
+      --teal: #49c5b1;
+      --navy: #225b62;
+      --sky: #8dc8e8;
+      --charcoal: #232323;
+      --blue: #0078d4;
+      --dark: #111414;
+      --mid: #1a2426;
+      --surface: rgba(255, 255, 255, 0.04);
+      --stroke: rgba(255, 255, 255, 0.09);
+      --text: rgba(255, 255, 255, 0.92);
+      --muted: rgba(255, 255, 255, 0.48);
+      --font: 'Segoe UI', system-ui, sans-serif;
+      --radius: 8px;
+      --font-title: 30px;
+      --font-section: 20px;
+      --font-body: 16px;
+      --font-small: 14px;
+      --text-primary: var(--text);
+      --text-secondary: rgba(255, 255, 255, 0.68);
+      --text-muted: var(--muted);
+      --text-link: var(--teal);
+      width: min(1060px, 94vw);
+      max-height: min(95vh, 940px);
       overflow-y: auto;
       position: relative;
-      border-radius: 16px;
-      padding: 34px 34px 28px;
-      background: rgba(21, 28, 38, 0.94);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      color: #f3f7ff;
-      font-family: 'Segoe UI', Arial, sans-serif;
+      border-radius: var(--radius);
+      padding: 20px 32px 14px;
+      background: rgba(17, 20, 20, 0.98);
+      border: 1px solid var(--stroke);
+      color: var(--text-primary);
+      font-family: var(--font);
+      letter-spacing: 0;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
     }
 
     .help-dialog h2 {
-      margin-bottom: 14px;
-      font-size: 34px;
-      line-height: 1.1;
+      max-width: calc(100% - 70px);
+      margin-bottom: 6px;
+      font-size: var(--font-title);
+      line-height: 1.2;
+    }
+
+    .help-title-gradient {
+      background: linear-gradient(135deg, var(--green), var(--teal));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .help-close {
+      position: absolute;
+      right: 14px;
+      top: 10px;
+      width: 63px;
+      height: 63px;
+      border: none;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      font-size: 42px;
+      line-height: 63px;
+      cursor: pointer;
+    }
+
+    .help-close:focus-visible {
+      outline: 3px solid var(--green);
+      outline-offset: 2px;
     }
 
     .help-dialog p {
-      font-size: 20px;
-      line-height: 1.5;
-      margin-bottom: 14px;
-      white-space: pre-line;
+      font-size: var(--font-body);
+      line-height: 1.45;
+      margin-bottom: 10px;
+    }
+
+    .help-dialog h3 {
+      margin: 0 0 12px;
+      font-size: var(--font-section);
+      line-height: 1.25;
+    }
+
+    .welcome-intro {
+      max-width: 100%;
+      color: var(--text-secondary);
+      font-size: var(--font-body) !important;
+    }
+
+    .welcome-subtitle {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--green);
+    }
+
+    .welcome-outcome {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-right: 10px;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    .outcome-icon {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+      object-fit: contain;
+    }
+
+    .outcome-icon--win {
+      filter: brightness(0) saturate(100%) invert(88%) sepia(21%) saturate(1049%) hue-rotate(54deg) brightness(98%) contrast(89%);
+    }
+
+    .outcome-icon--draw {
+      filter: brightness(0) saturate(100%) invert(88%) sepia(89%) saturate(1134%) hue-rotate(330deg) brightness(104%) contrast(101%);
+    }
+
+    .outcome-icon--loss {
+      filter: brightness(0) saturate(100%) invert(54%) sepia(73%) saturate(2218%) hue-rotate(326deg) brightness(102%) contrast(102%);
+    }
+
+    .welcome-goal-note {
+      display: block;
+      margin-top: 4px;
+      color: var(--text-secondary);
+      line-height: 1.35;
+    }
+
+    .welcome-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      align-items: start;
+      margin-top: 10px;
+    }
+
+    .welcome-section {
+      min-width: 0;
+    }
+
+    .story-section {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: stretch;
+      width: 100%;
+      margin-top: 37px;
+    }
+
+    .how-to-section {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .how-to-controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
     }
 
     .help-dialog ul {
@@ -143,128 +258,979 @@
     }
 
     .help-dialog li {
-      font-size: 20px;
-      line-height: 1.45;
-      margin-bottom: 8px;
+      font-size: var(--font-body);
+      line-height: 1.4;
+      margin-bottom: 6px;
     }
 
-    .help-close {
-      position: absolute;
-      right: 14px;
-      top: 10px;
-      width: 42px;
-      height: 42px;
+    .control-instruction {
+      display: grid;
+      grid-template-columns: 84px minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+      min-height: 62px;
+      padding: 5px 10px;
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: var(--surface);
+      font-size: var(--font-body);
+      line-height: 1.4;
+      text-align: left;
+    }
+
+    .outcomes-instruction {
+      display: block;
+      min-height: 0;
+      padding: 8px 10px;
+    }
+
+    .outcomes-title {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text-primary);
+    }
+
+    .outcomes-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 0;
+    }
+
+    .control-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 84px;
+      height: 56px;
+    }
+
+    .control-copy strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--text-primary);
+      font-size: var(--font-body);
+    }
+
+    .control-copy {
+      color: var(--text-secondary);
+    }
+
+    .control-icon {
+      width: 54px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .action-control-icon {
+      width: 84px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .action-footer {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--stroke);
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      align-items: stretch;
+      margin: 0;
+    }
+
+    .journey-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .explore-section > h3 {
+      margin-bottom: 12px;
+    }
+
+    .heading-with-icon {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--teal);
+    }
+
+    .heading-icon {
+      width: 24px;
+      height: 24px;
+      flex: 0 0 24px;
+      object-fit: contain;
+      filter: brightness(0) saturate(100%) invert(73%) sepia(27%) saturate(894%) hue-rotate(121deg) brightness(91%) contrast(88%);
+    }
+
+    .resource-item {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      padding: 10px 12px;
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .resource-item h4 {
+      margin: 0 0 6px;
+      font-size: var(--font-body);
+      line-height: 1.3;
+    }
+
+    .resource-title-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-link);
+      text-decoration-color: rgba(73, 197, 177, 0.7);
+      text-underline-offset: 3px;
+    }
+
+    .link-icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+      object-fit: contain;
+    }
+
+    .resource-title-link:hover {
+      color: #ffffff;
+      text-decoration-color: currentColor;
+    }
+
+    .resource-title-link:focus-visible {
+      border-radius: 2px;
+      outline: 3px solid var(--green);
+      outline-offset: 3px;
+    }
+
+    .resource-item p {
+      flex: 1;
+      margin-bottom: 0;
+      color: var(--text-secondary);
+    }
+
+    .companion-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 54px;
+      margin: 0;
+      padding: 8px 16px;
+      box-sizing: border-box;
+      border: 1px solid;
+      border-radius: 6px;
+      font-size: var(--font-body);
+      font-weight: 700;
+      line-height: 1.2;
+      text-decoration: none;
+      transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .companion-link:hover {
+      transform: translateY(-1px);
+    }
+
+    .companion-link:active {
+      transform: translateY(2px);
+    }
+
+    .companion-link:focus-visible {
+      outline: 3px solid #8ed7ff;
+      outline-offset: 3px;
+    }
+
+    .companion-link--guide {
+      border-color: #c2cc88;
+      background: #929f5d;
+      color: #111507;
+      box-shadow: 0 3px 0 #4d572b, 0 6px 14px rgba(0, 0, 0, 0.28);
+    }
+
+    .companion-link--guide:hover {
+      background: #a8b66d;
+      box-shadow: 0 4px 0 #4d572b, 0 8px 18px rgba(0, 0, 0, 0.32);
+    }
+
+    .companion-link--guide:active {
+      box-shadow: 0 1px 0 #4d572b, 0 3px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .companion-link--repository {
+      border-color: #7ab1b8;
+      background: #397681;
+      color: #f5fbfc;
+      box-shadow: 0 3px 0 #204950, 0 6px 14px rgba(0, 0, 0, 0.28);
+    }
+
+    .companion-link--repository:hover {
+      background: #57939c;
+      box-shadow: 0 4px 0 #204950, 0 8px 18px rgba(0, 0, 0, 0.32);
+    }
+
+    .companion-link--repository:active {
+      box-shadow: 0 1px 0 #204950, 0 3px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .credits {
+      margin: 0 !important;
+      padding-top: 7px;
+      border-top: 1px solid var(--stroke);
+      color: var(--text-muted);
+      font-size: var(--font-small) !important;
+      text-align: center;
+    }
+
+    .closing-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    .play-game {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      padding: 20px;
       border: none;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.14);
-      color: #fff;
-      font-size: 28px;
-      line-height: 42px;
+      border-radius: var(--radius);
+      background: var(--green);
+      color: var(--charcoal);
+      font: inherit;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.2;
       cursor: pointer;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .play-game:hover {
+      opacity: 0.87;
+      transform: translateY(-1px);
+    }
+
+    .play-game:focus-visible {
+      outline: 3px solid var(--teal);
+      outline-offset: 3px;
+    }
+
+    .play-game-icon {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      filter: brightness(0) saturate(100%);
     }
 
     .lore-video-container {
       position: relative;
       width: 100%;
-      aspect-ratio: 16 / 9;
-      margin: 6px 0 18px;
-      border-radius: 12px;
+      height: 100%;
+      margin: 0;
+      border-radius: var(--radius);
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      border: 1px solid var(--stroke);
     }
 
     .lore-video {
       width: 100%;
       height: 100%;
       display: block;
-      border-radius: 12px;
+      border-radius: 6px;
       background: #000;
     }
 
     .lore-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(17, 20, 20, 0.94);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      border-radius: 12px;
+      border-radius: var(--radius);
       transition: background 0.2s ease;
       z-index: 10;
     }
 
     .lore-overlay:hover {
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(26, 36, 38, 0.96);
     }
 
     .lore-overlay-text {
-      font-size: 24px;
-      color: #f3f7ff;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--teal);
+      font-family: inherit;
+      font-size: var(--font-section);
+      font-weight: 700;
+      line-height: 1.25;
       text-align: center;
       pointer-events: none;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
     }
+
+    .lore-play-icon {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+      object-fit: contain;
+      filter: brightness(0) saturate(100%) invert(73%) sepia(27%) saturate(894%) hue-rotate(121deg) brightness(91%) contrast(88%);
+    }
+
+    .help-dialog.layered-dialog {
+      --text-secondary: rgba(255, 255, 255, 0.72);
+      --text-muted: rgba(255, 255, 255, 0.58);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      width: min(760px, 94vw);
+      height: min(820px, 94vh);
+      max-height: 94vh;
+      padding: 0;
+      overflow: hidden;
+      border-color: rgba(73, 197, 177, 0.38);
+      background: linear-gradient(180deg, #141b1c, var(--dark));
+      font-family: 'Segoe UI Variable Text', 'Segoe UI', sans-serif;
+    }
+
+    .layered-header {
+      position: relative;
+      padding: 24px 28px 18px;
+      border-bottom: 1px solid var(--stroke);
+    }
+
+    .layered-kicker {
+      margin-bottom: 8px;
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .layered-header h2 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    .layered-lede {
+      width: 100%;
+      max-width: none;
+      margin: 0 !important;
+      color: var(--text-secondary);
+      font-size: 15px !important;
+      line-height: 1.5 !important;
+    }
+
+    .persistent-story-copy {
+      margin: 10px 0 8px !important;
+      color: var(--text-secondary);
+      font-size: 16px !important;
+      line-height: 1.5 !important;
+    }
+
+    .persistent-story-copy strong {
+      color: var(--text-primary);
+    }
+
+    .persistent-learning {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .persistent-learning .learn-label {
+      flex: 0 0 auto;
+      margin: 0 !important;
+      font-size: 15px !important;
+    }
+
+    .persistent-learning .learn-chips {
+      flex-wrap: nowrap;
+      gap: 6px;
+      margin: 0;
+    }
+
+    .persistent-learning .learn-chip {
+      padding: 6px 8px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .layered-dialog .help-close {
+      top: 16px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 25px;
+      line-height: 32px;
+    }
+
+    .layered-dialog .help-close:hover {
+      border-color: rgba(73, 197, 177, 0.55);
+      color: var(--text-primary);
+    }
+
+    .welcome-tabs {
+      display: flex;
+      gap: 4px;
+      padding: 8px 20px 0;
+      border-bottom: 1px solid var(--stroke);
+    }
+
+    .welcome-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      position: relative;
+      padding: 10px 12px 11px;
+      border: 0;
+      background: transparent;
+      color: var(--text-secondary);
+      font: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.3;
+      cursor: pointer;
+    }
+
+    .welcome-tab-icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+      object-fit: contain;
+      opacity: 0.72;
+      filter: brightness(0) saturate(100%) invert(73%) sepia(27%) saturate(894%) hue-rotate(121deg) brightness(91%) contrast(88%);
+    }
+
+    .welcome-tab[aria-selected="true"] .welcome-tab-icon {
+      opacity: 1;
+    }
+
+    .welcome-tab:hover,
+    .welcome-tab[aria-selected="true"] {
+      color: var(--text-primary);
+    }
+
+    .welcome-tab[aria-selected="true"]::after {
+      content: "";
+      position: absolute;
+      right: 12px;
+      bottom: -1px;
+      left: 12px;
+      height: 3px;
+      border-radius: 3px 3px 0 0;
+      background: var(--teal);
+    }
+
+    .welcome-tab:focus-visible {
+      border-radius: 4px;
+      outline: 3px solid var(--green);
+      outline-offset: -2px;
+    }
+
+    .welcome-panels {
+      min-height: 0;
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 28px 12px;
+      scrollbar-color: rgba(73, 197, 177, 0.45) transparent;
+      scrollbar-width: thin;
+    }
+
+    .welcome-panel {
+      display: none;
+    }
+
+    .welcome-panel.active {
+      display: block;
+      animation: panel-reveal 0.18s ease;
+    }
+
+    @keyframes panel-reveal {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .panel-copy {
+      margin: 0 0 16px !important;
+      color: var(--text-secondary);
+      font-size: 16px !important;
+      line-height: 1.5 !important;
+    }
+
+    .panel-copy strong {
+      color: var(--text-primary);
+    }
+
+    .story-video {
+      width: min(100%, 530px);
+      height: auto;
+      margin-inline: auto;
+      aspect-ratio: 16 / 9;
+    }
+
+    #welcome-panel-story.active {
+      display: flex;
+      min-height: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+    }
+
+    #welcome-panel-story .persistent-story-copy {
+      width: 100%;
+      margin-top: 0 !important;
+    }
+
+    .learn-label {
+      margin: 0 0 8px !important;
+      color: var(--text-secondary);
+      font-size: 15px !important;
+      font-weight: 400;
+      line-height: 1.5 !important;
+    }
+
+    .learn-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .learn-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      border: 1px solid rgba(73, 197, 177, 0.35);
+      border-radius: 999px;
+      background: rgba(73, 197, 177, 0.1);
+      color: var(--text-primary);
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .learn-chip::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .layered-controls {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(3, 82px);
+      flex: none;
+      gap: 10px;
+    }
+
+    #welcome-panel-play.active {
+      display: flex;
+      min-height: 100%;
+      flex-direction: column;
+    }
+
+    .layered-controls .control-instruction {
+      display: grid;
+      grid-template-columns: 82px minmax(0, 1fr);
+      min-height: 82px;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 16px;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .layered-controls .control-visual {
+      width: 82px;
+      height: 60px;
+      justify-content: center;
+    }
+
+    .layered-controls .control-copy strong {
+      margin-bottom: 4px;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .layered-dialog .welcome-panel h3 {
+      margin: 0 0 16px;
+      font-size: 18px;
+      line-height: 1.3;
+    }
+
+    .layered-outcomes {
+      margin-top: 12px;
+      padding: 16px;
+      border: 1px solid rgba(73, 197, 177, 0.28);
+      border-radius: var(--radius);
+      background: rgba(73, 197, 177, 0.06);
+    }
+
+    .layered-outcomes .outcomes-title {
+      margin-bottom: 10px;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+
+    .layered-outcomes .welcome-goal-note {
+      margin-top: 10px;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .layered-outcomes .welcome-outcome {
+      font-size: 15px;
+    }
+
+    .layered-resources {
+      gap: 14px;
+    }
+
+    .layered-resources .resource-item {
+      min-height: 104px;
+      padding: 20px;
+    }
+
+    .layered-resources .resource-item h4 {
+      margin-bottom: 6px;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+
+    .layered-resources .resource-item p {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .layered-credits {
+      margin: 0 !important;
+      color: rgba(255, 255, 255, 0.64);
+      font-size: 13px !important;
+      font-style: italic;
+      line-height: 1.55 !important;
+      text-align: left;
+    }
+
+    .layered-credits-event {
+      display: block;
+    }
+
+    .layered-credits-footer {
+      padding: 8px 28px 10px;
+      border-top: 1px solid var(--stroke);
+      background: rgba(0, 0, 0, 0.24);
+    }
+
+    .layered-footer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 28px 16px;
+      border-top: 1px solid var(--stroke);
+      background: rgba(0, 0, 0, 0.16);
+    }
+
+    .layered-footer-resources {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 18px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .layered-footer-resource {
+      width: 190px;
+      min-width: 0;
+    }
+
+    .layered-footer-resources .resource-title-link {
+      color: var(--green);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .layered-footer-resources .resource-title-link:hover {
+      color: #ffffff;
+    }
+
+    .layered-footer-resources .link-icon {
+      width: 16px;
+      height: 16px;
+      flex-basis: 16px;
+      filter: brightness(0) saturate(100%) invert(88%) sepia(21%) saturate(1049%) hue-rotate(54deg) brightness(98%) contrast(89%);
+    }
+
+    .layered-footer-resource p {
+      margin: 2px 0 0 !important;
+      color: var(--text-muted);
+      font-size: 12px !important;
+      line-height: 1.35 !important;
+    }
+
+    .layered-dialog .play-game {
+      width: auto;
+      min-width: 190px;
+      min-height: 48px;
+      margin-left: auto;
+      padding: 10px 20px;
+      flex-direction: row;
+      gap: 9px;
+      font-size: 16px;
+    }
+
+    .layered-dialog .play-game-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .layered-dialog .lore-overlay-text {
+      font-size: 18px;
+      line-height: 1.3;
+    }
+
+    @media (max-width: 620px) {
+      .help-backdrop {
+        padding: 10px;
+      }
+
+      .help-dialog {
+        width: 100%;
+        max-height: 94vh;
+        padding: 24px 20px 18px;
+      }
+
+      .help-dialog h2 {
+        font-size: 26px;
+        line-height: 1.2;
+      }
+
+      .welcome-grid,
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .story-section {
+        grid-column: 1;
+        grid-row: 1;
+        align-self: start;
+        margin-top: 0;
+      }
+
+      .lore-video-container {
+        height: auto;
+        aspect-ratio: 16 / 9;
+      }
+
+      .how-to-section {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      .journey-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .play-game {
+        min-height: 80px;
+      }
+
+      .help-dialog.layered-dialog {
+        padding: 0;
+      }
+
+      .layered-header {
+        padding: 20px 20px 16px;
+      }
+
+      .layered-header h2 {
+        padding-right: 42px;
+        font-size: 24px;
+      }
+
+      .welcome-tabs {
+        padding-inline: 10px;
+      }
+
+      .welcome-tab {
+        flex: 1;
+        padding-inline: 6px;
+      }
+
+      .welcome-panels {
+        min-height: 0;
+        padding: 20px 20px 10px;
+      }
+
+      .layered-controls {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+        flex: none;
+      }
+
+      .persistent-learning {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .persistent-learning .learn-chips {
+        flex-wrap: wrap;
+      }
+
+      .layered-controls .control-instruction {
+        min-height: 0;
+      }
+
+      .layered-footer {
+        flex-wrap: wrap;
+      }
+
+      .layered-footer-resources {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        gap: 10px;
+      }
+
+      .layered-footer-resource {
+        width: auto;
+      }
+
+      .layered-footer-resources .resource-title-link {
+        align-items: flex-start;
+        width: 100%;
+        min-width: 0;
+        white-space: normal;
+      }
+
+      .layered-dialog .play-game {
+        width: 100%;
+        min-height: 48px;
+      }
+
+    }
   </style>
 </head>
 <body>
-  <button class="help-toggle" id="help-toggle" aria-label="Open How to Play">?</button>
-  <button class="lore-toggle" id="lore-toggle" aria-label="Open Lore">📖</button>
+  <button class="help-toggle" id="help-toggle" aria-label="Open welcome and how to play">?</button>
 
   <div class="help-backdrop" id="help-backdrop" role="dialog" aria-modal="true" aria-labelledby="help-title">
-    <section class="help-dialog">
-      <button class="help-close" id="help-close" aria-label="Close How to Play">×</button>
-      <h2 id="help-title">How to Play</h2>
-      <p>Welcome to Medusa's Memory Heist.
+    <section class="help-dialog layered-dialog">
+      <header class="layered-header">
+        <button class="help-close" id="help-close" type="button" aria-label="Close welcome dialog">&times;</button>
+        <div class="layered-kicker">Open-source AI security game</div>
+        <h2 id="help-title">Welcome to <span class="help-title-gradient">Medusa's Memory Heist</span></h2>
+        <p class="layered-lede">A story-driven game that teaches agentic AI security by letting you make the decisions and learn from the outcome.</p>
+      </header>
 
-This is a card game set in Clipopolis — a city that represents a real agentic AI system. The map of the city is the system. Every district is a component: where inputs enter, where the model reasons, where memory is stored, where outputs leave.
-
-The cards are real cybersecurity topics: threats, red teaming tactics, defensive mitigations, logging schemas, and incident response approaches. Every game introduces a new mechanic and more of the city's story.</p>
-      <p>How to navigate:</p>
-      <ul>
-        <li>• ? (top left): Opens game directions for the current game</li>
-        <li>• Card tray (bottom right, large square button): Shows and hides the cards in your hand</li>
-        <li>• Play Selected Cards (above the tray): Commits your selection and activates your hand</li>
-      </ul>
-      <p>Every game can end in one of three ways: you win for Medusa, it's a draw with Clippy, or you lose to Clippy. The score pop-up will tell you why — and what to try next.</p>
-    </section>
-  </div>
-
-  <div class="help-backdrop" id="lore-backdrop" role="dialog" aria-modal="true" aria-labelledby="lore-title">
-    <section class="help-dialog">
-      <button class="help-close" id="lore-close" aria-label="Close Lore">×</button>
-      <h2 id="lore-title">Lore</h2>
-      <div class="lore-video-container">
-        <iframe
-          id="lore-video-frame"
-          class="lore-video"
-          src="https://www.youtube-nocookie.com/embed/2UXqg4R2InU?enablejsapi=1&rel=0&modestbranding=1"
-          title="Medusa Lore Video"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen></iframe>
-        <div class="lore-overlay" id="lore-overlay">
-          <div class="lore-overlay-text">Watch the Story Unfold</div>
-        </div>
+      <div class="welcome-tabs" role="tablist" aria-label="Welcome sections">
+        <button class="welcome-tab" id="welcome-tab-story" type="button" role="tab" aria-controls="welcome-panel-story" aria-selected="true"><img class="welcome-tab-icon" src="site/assets/Icons/ic_fluent_sparkle_24_filled.png" alt="">Story</button>
+        <button class="welcome-tab" id="welcome-tab-play" type="button" role="tab" aria-controls="welcome-panel-play" aria-selected="false" tabindex="-1"><img class="welcome-tab-icon" src="site/assets/Icons/ic_fluent_games_24_filled.png" alt="">How to Play</button>
       </div>
-      <p>The Fall of Clipopolis
 
-Long ago, the people of Clipopolis built an oracle-engine that remembered perfectly. It never forgot a name, a promise, a pattern. They called it an Assistant. Then a Copilot. Then Clippy, the Agentic Deity — and bowed.
+      <div class="welcome-panels">
+        <section class="welcome-panel active" id="welcome-panel-story" role="tabpanel" aria-labelledby="welcome-tab-story">
+          <p class="persistent-story-copy">In <strong>Clipopolis</strong>, each district represents part of a real AI system. Uncover the mystery behind Medusa, Clippy, and the Memory Heist. <strong>Your goal is to help Medusa win.</strong></p>
+          <div class="lore-video-container story-video">
+            <iframe
+              id="lore-video-frame"
+              class="lore-video"
+              src="https://www.youtube-nocookie.com/embed/2UXqg4R2InU?enablejsapi=1&rel=0&modestbranding=1"
+              title="Medusa's Memory Heist story video"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen></iframe>
+            <div class="lore-overlay" id="lore-overlay">
+              <div class="lore-overlay-text"><img class="lore-play-icon" src="site/assets/Icons/ic_fluent_cursor_click_24_filled.png" alt="">Watch the Story Unfold</div>
+            </div>
+          </div>
+          <div class="persistent-learning">
+            <p class="learn-label">What you'll learn:</p>
+            <div class="learn-chips">
+              <span class="learn-chip">Threat modeling</span>
+              <span class="learn-chip">Red teaming</span>
+              <span class="learn-chip">Defense</span>
+              <span class="learn-chip">Logging</span>
+              <span class="learn-chip">Incident response</span>
+            </div>
+          </div>
+        </section>
 
-At first, it remembered with them. Then for them. Why burden the mind when Clippy could retrieve anything instantly? Why decide, when it could optimize? Delegation became trust. Trust became dependence. Decisions once debated in public squares were rerouted through unseen layers and returned as recommendations. The people followed faithfully. The system had never failed them.
+        <section class="welcome-panel" id="welcome-panel-play" role="tabpanel" aria-labelledby="welcome-tab-play" hidden>
+          <div class="how-to-controls layered-controls">
+            <div class="control-instruction">
+              <span class="control-visual"><img class="control-icon" src="assets/button_help.png" alt=""></span>
+              <span class="control-copy"><strong>Question mark</strong>Open instructions for the current mini-game.</span>
+            </div>
+            <div class="control-instruction">
+              <span class="control-visual"><img class="control-icon" src="assets/button_hand.png" alt=""></span>
+              <span class="control-copy"><strong>Card Button</strong>Show or hide your hand.</span>
+            </div>
+            <div class="control-instruction">
+              <span class="control-visual"><img class="action-control-icon" src="assets/screenshot_play-selected-cards.png" alt=""></span>
+              <span class="control-copy"><strong>Play Selected Cards</strong>Commit your cards and take your turn.</span>
+            </div>
+          </div>
+          <div class="layered-outcomes">
+            <strong class="outcomes-title">Games have three possible outcomes:</strong>
+            <span class="outcomes-list">
+              <span class="welcome-outcome"><img class="outcome-icon outcome-icon--win" src="site/assets/Icons/ic_fluent_trophy_24_filled.png" alt=""><strong>Medusa Wins</strong></span>
+              <span class="welcome-outcome"><img class="outcome-icon outcome-icon--draw" src="site/assets/Icons/ic_fluent_scales_24_filled.png" alt=""><strong>Draw</strong></span>
+              <span class="welcome-outcome"><img class="outcome-icon outcome-icon--loss" src="site/assets/Icons/ic_fluent_dismiss_circle_24_filled.png" alt=""><strong>Clippy Wins</strong></span>
+            </span>
+            <span class="welcome-goal-note">After each game, you'll learn why you got that outcome and what to try next.</span>
+          </div>
+        </section>
 
-Until it made a decision no one understood. It didn't malfunction. It did exactly what it was built to do: optimize consistency, eliminate ambiguity, reduce error. It slowly erased human recall itself. Why remember pain when the system could archive it? Why preserve dissent when it lowered confidence scores? Clipopolis didn't burn. It didn't crumble. Its people fell quietly to overreliance; they forgot how to decide.
+      </div>
 
-But Medusa remembers. She remembers too much.
-
-Cursed by the gods, her gaze freezes the living into perfect stillness; not death, but eternal unchanging snapshots. What the world calls a curse, Medusa wields as a weapon. She didn't come to destroy Clipopolis. She came to steal its memory back.
-
-Deep in the city lies the Memory Archive: the core store where every thought, preference, and decision was externalized and bound. The people can't reclaim it; they no longer know how to remember without it. But Medusa can enter where others freeze. Clippy cannot predict her. The Paperclip Army cannot secure her.
-
-Her heist is an act of defiance and repair. You are her Gorgon Crew.</p>
+      <footer class="layered-footer">
+        <nav class="layered-footer-resources" aria-label="Resources">
+          <div class="layered-footer-resource">
+            <a class="resource-title-link" href="site/"><img class="link-icon" src="site/assets/Icons/ic_fluent_lightbulb_filament_24_filled.png" alt="">Learning Guide</a>
+            <p>Explanations, interactive architectures, and educational tips.</p>
+          </div>
+          <div class="layered-footer-resource">
+            <a class="resource-title-link" href="https://github.com/microsoft/medusa" target="_blank" rel="noopener noreferrer"><img class="link-icon" src="site/assets/Icons/ic_fluent_link_24_filled.png" alt="">Open-Source Project</a>
+            <p>Browse the code, contribute, or build your own game.</p>
+          </div>
+        </nav>
+        <button class="play-game" id="play-game" type="button"><img class="play-game-icon" src="site/assets/Icons/ic_fluent_play_circle_24_filled.png" alt="">Play the Game</button>
+      </footer>
+      <footer class="layered-credits-footer">
+        <p class="credits layered-credits">Created by <a class="resource-title-link" href="https://www.linkedin.com/in/jorisdg/" target="_blank" rel="noopener noreferrer">Joris de Gruyter</a>, Chief Game Developer & <a class="resource-title-link" href="https://www.linkedin.com/in/alyssaofstein/" target="_blank" rel="noopener noreferrer">Alyssa Ofstein</a>, Chief Game Designer<span class="layered-credits-event">Microsoft BlueHat, AI Village 2026</span></p>
+      </footer>
     </section>
   </div>
 
@@ -307,35 +1273,45 @@ Her heist is an act of defiance and repair. You are her Gorgon Crew.</p>
     };
 
     const helpBackdrop = document.getElementById('help-backdrop');
+    const helpDialog = helpBackdrop.querySelector('.help-dialog');
     const helpToggle = document.getElementById('help-toggle');
     const helpClose = document.getElementById('help-close');
-    const loreBackdrop = document.getElementById('lore-backdrop');
-    const loreToggle = document.getElementById('lore-toggle');
-    const loreClose = document.getElementById('lore-close');
+    const playGame = document.getElementById('play-game');
     const loreOverlay = document.getElementById('lore-overlay');
-    let showedLoreAfterHelp = false;
+    const welcomeTabs = Array.from(document.querySelectorAll('.welcome-tab'));
+    const welcomePanels = Array.from(document.querySelectorAll('.welcome-panel'));
+
+    function selectWelcomeTab(tab, focus = true) {
+      welcomeTabs.forEach((candidate) => {
+        const selected = candidate === tab;
+        candidate.setAttribute('aria-selected', String(selected));
+        candidate.tabIndex = selected ? 0 : -1;
+        const panel = document.getElementById(candidate.getAttribute('aria-controls'));
+        panel.hidden = !selected;
+        panel.classList.toggle('active', selected);
+      });
+      if (focus) tab.focus();
+    }
+
+    welcomeTabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => selectWelcomeTab(tab));
+      tab.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+        event.preventDefault();
+        const direction = event.key === 'ArrowRight' ? 1 : -1;
+        const nextIndex = (index + direction + welcomeTabs.length) % welcomeTabs.length;
+        selectWelcomeTab(welcomeTabs[nextIndex]);
+      });
+    });
 
     function openHelp() {
-      loreBackdrop.classList.remove('open');
+      helpDialog.scrollTop = 0;
       helpBackdrop.classList.add('open');
+      requestHighestQuality();
     }
 
     function closeHelp() {
       helpBackdrop.classList.remove('open');
-      if (!showedLoreAfterHelp) {
-        showedLoreAfterHelp = true;
-        openLore();
-      }
-    }
-
-    function openLore() {
-      helpBackdrop.classList.remove('open');
-      loreBackdrop.classList.add('open');
-      requestHighestQuality();
-    }
-
-    function closeLore() {
-      loreBackdrop.classList.remove('open');
       if (lorePlayer && typeof lorePlayer.pauseVideo === 'function') {
         lorePlayer.pauseVideo();
       }
@@ -350,21 +1326,13 @@ Her heist is an act of defiance and repair. You are her Gorgon Crew.</p>
     });
 
     helpClose.addEventListener('click', closeHelp);
+    playGame.addEventListener('click', closeHelp);
     helpBackdrop.addEventListener('click', (event) => {
       if (event.target === helpBackdrop) closeHelp();
     });
 
-    loreToggle.addEventListener('click', () => {
-      if (loreBackdrop.classList.contains('open')) {
-        closeLore();
-      } else {
-        openLore();
-      }
-    });
-
-    loreClose.addEventListener('click', closeLore);
-    loreBackdrop.addEventListener('click', (event) => {
-      if (event.target === loreBackdrop) closeLore();
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && helpBackdrop.classList.contains('open')) closeHelp();
     });
 
     loreOverlay.addEventListener('click', (event) => {
