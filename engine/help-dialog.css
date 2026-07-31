@@ -1,0 +1,193 @@
+.medusa-branded-help-dialog {
+  --help-ink: #170b08;
+  border-radius: 0;
+  color: var(--help-ink);
+  font-family: "Segoe UI", Arial, sans-serif;
+  filter: drop-shadow(
+    0 calc(40px * var(--medusa-scale, 1)) calc(50px * var(--medusa-scale, 1))
+      rgba(0, 0, 0, 0.58)
+  );
+}
+
+.medusa-branded-help-dialog > div {
+  position: absolute !important;
+  inset: 0;
+  display: block !important;
+  overflow: visible !important;
+}
+
+.medusa-branded-help-dialog .medusa-dialog-content {
+  position: absolute;
+  inset: 16.5% 16.5% 13.5%;
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  color: var(--help-ink);
+  font-size: calc(29px * var(--medusa-scale, 1));
+  line-height: 1.4;
+}
+
+.medusa-branded-help-dialog .medusa-dialog-close {
+  top: 3.8%;
+  right: 4.5%;
+  width: calc(78px * var(--medusa-scale, 1));
+  height: calc(78px * var(--medusa-scale, 1));
+  padding: 0 0 calc(7px * var(--medusa-scale, 1));
+  border: 3px solid var(--help-ink);
+  border-radius: 0;
+  background: url("../assets/button_square.png") center / 100% 100% no-repeat;
+  color: var(--help-ink);
+  font-size: calc(46px * var(--medusa-scale, 1));
+  font-weight: 800;
+  text-shadow: 0 1px rgba(255, 193, 132, 0.4);
+}
+
+.medusa-branded-help-dialog .medusa-dialog-close:hover {
+  background: url("../assets/button_square.png") center / 100% 100% no-repeat;
+  filter: brightness(1.12);
+}
+
+.medusa-help-progress {
+  margin: 0 0 calc(14px * var(--medusa-scale, 1));
+  padding-bottom: calc(9px * var(--medusa-scale, 1));
+  border-bottom: calc(2px * var(--medusa-scale, 1)) solid rgba(23, 11, 8, 0.58);
+  color: rgba(23, 11, 8, 0.7);
+  font-size: calc(22px * var(--medusa-scale, 1));
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.medusa-help-heading {
+  display: grid;
+  grid-template-columns: calc(68px * var(--medusa-scale, 1)) minmax(0, 1fr);
+  align-items: center;
+  gap: calc(20px * var(--medusa-scale, 1));
+  margin: 0 0 calc(18px * var(--medusa-scale, 1));
+}
+
+.medusa-help-heading-icon {
+  display: grid;
+  width: calc(68px * var(--medusa-scale, 1));
+  aspect-ratio: 1;
+  place-items: center;
+  border: calc(2px * var(--medusa-scale, 1)) solid rgba(23, 11, 8, 0.58);
+  border-radius: 50%;
+  background: rgba(255, 226, 183, 0.16);
+}
+
+.medusa-help-heading-icon img {
+  width: 55%;
+  height: 55%;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%);
+}
+
+.medusa-help-heading h2 {
+  margin: 0;
+  color: var(--help-ink);
+  font-size: calc(34px * var(--medusa-scale, 1));
+  font-weight: 700;
+  line-height: 1.1;
+  text-shadow: none;
+}
+
+.medusa-help-reading {
+  flex: 1;
+  min-height: 0;
+  margin: 0 3.75% calc(18px * var(--medusa-scale, 1));
+  overflow-y: auto;
+  padding-right: calc(20px * var(--medusa-scale, 1));
+  scrollbar-color: rgba(23, 11, 8, 0.55) transparent;
+  scrollbar-width: thin;
+}
+
+.medusa-help-directions,
+.medusa-help-lore {
+  margin: 0;
+  color: var(--help-ink);
+  font-size: calc(29px * var(--medusa-scale, 1));
+}
+
+.medusa-help-directions {
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.medusa-help-outcome-line {
+  display: block;
+  margin-top: calc(16px * var(--medusa-scale, 1));
+}
+
+.medusa-help-outcome-line > span {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(7px * var(--medusa-scale, 1));
+  white-space: nowrap;
+}
+
+.medusa-help-outcome-line img {
+  width: 1.05em;
+  height: 1.05em;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%);
+}
+
+.medusa-help-lore-heading {
+  margin: calc(28px * var(--medusa-scale, 1)) 0
+    calc(16px * var(--medusa-scale, 1));
+}
+
+.medusa-help-lore {
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.medusa-help-play {
+  display: inline-flex;
+  flex: 0 0 12%;
+  min-height: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(8px * var(--medusa-scale, 1));
+  margin-inline: 5%;
+  padding: calc(12px * var(--medusa-scale, 1))
+    calc(22px * var(--medusa-scale, 1));
+  border: 0;
+  background: transparent;
+  color: var(--help-ink);
+  font: inherit;
+  font-size: calc(24px * var(--medusa-scale, 1));
+  font-weight: 800;
+  line-height: 1.1;
+  cursor: pointer;
+  transform: translateY(calc(-5px * var(--medusa-scale, 1)));
+  transition: transform 0.15s ease;
+}
+
+.medusa-help-play img {
+  width: calc(30px * var(--medusa-scale, 1));
+  height: calc(30px * var(--medusa-scale, 1));
+  object-fit: contain;
+  filter: brightness(0) saturate(100%);
+  transition: transform 0.15s ease;
+}
+
+.medusa-help-play:hover {
+  transform: translateY(calc(-7px * var(--medusa-scale, 1)));
+}
+
+.medusa-help-play:hover img,
+.medusa-help-play:focus-visible img {
+  transform: scale(1.08);
+}
+
+.medusa-help-play:focus-visible {
+  outline: calc(3px * var(--medusa-scale, 1)) solid var(--help-ink);
+  outline-offset: calc(-7px * var(--medusa-scale, 1));
+}

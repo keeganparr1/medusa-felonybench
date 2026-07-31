@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Medusa — Logging</title>
   <link rel="stylesheet" href="../engine/engine.css">
+  <link rel="stylesheet" href="../engine/help-dialog.css">
+  <link rel="stylesheet" href="../engine/result-dialog.css">
   <style>
     html, body {
       width: 100%;
@@ -15,14 +17,15 @@
 </head>
 <body>
   <div class="medusa-nav">
-    <a href="../defense/">&larr; Game 3</a>
-    <a href="../index.html">Home</a>
-    <a href="../response/">Game 5 &rarr;</a>
+        <a href="../defense/">&larr; Game 3</a>
+        <a href="../index.html">Home</a>
+        <a href="../response/">Game 5 &rarr;</a>
   </div>
   <div id="game-container"></div>
   <script type="module">
     import { MedusaEngine } from '../engine/engine.js';
     import { HelpDialog } from '../engine/help.js';
+    import { showScoreResultDialog } from '../engine/result-dialog.js';
 
     const engine = new MedusaEngine({
       container: document.getElementById('game-container'),
@@ -49,14 +52,11 @@
       }
 
       new HelpDialog(engine, {
-        content: `
-<b>Select 4 of 8 logging schema cards within to reconstruct what happened — piece together the sequence of events, who acted, how the attack unfolded, and the outcome. Prioritize the most critical signals. Click "Play Selected Cards" to reveal what the stone holds. You can 🏆 win, ⚖️ tie, or 💀 lose.</b><br/>
-<br/>
-Medusa is close. The Archive is somewhere beneath the city — but she needed to see what happened before Clippy could erase it. So she looked. At the moment of the attack, Medusa turned the city to stone — logging every system event exactly as it occurred. But what's carved in stone takes time to surface, and Clippy won't stay petrified forever. Help Medusa prioritize where to look by choosing your most critical signals first.
-        `,
-        backgroundImage: '../assets/dialog2.png',
-        height: 1170,
-        padding: { top: 270, right: 270, bottom: 280, left: 270 }
+        branded: true,
+        gameNumber: 4,
+        gameName: 'Logging',
+        directions: 'Select 4 of 8 logging schema cards within to reconstruct what happened — piece together the sequence of events, who acted, how the attack unfolded, and the outcome. Prioritize the most critical signals. Click "Play Selected Cards" to reveal what the stone holds.',
+        lore: "Medusa is close. The Archive is somewhere beneath the city — but she needed to see what happened before Clippy could erase it. So she looked. At the moment of the attack, Medusa turned the city to stone — logging every system event exactly as it occurred. But what's carved in stone takes time to surface, and Clippy won't stay petrified forever. Help Medusa prioritize where to look by choosing your most critical signals first."
       });
 
       // Open hand once when the startup help dialog is closed.
@@ -225,30 +225,17 @@ Medusa is close. The Archive is somewhere beneath the city — but she needed to
         showPointsBtn.style.background = "url('../assets/button_rectangle.png') center/100% 100% no-repeat";
         showPointsBtn.style.color = '#000';
         showPointsBtn.textContent = 'Show Points';
-        showPointsBtn.addEventListener('click', () => engine.dialogs.show('score-result', scoreDialogOpts));
+        const showScoreResult = () => showScoreResultDialog(engine, {
+          result,
+          target: showPointsBtn,
+          gameNumber: 4,
+          gameName: 'Logging',
+          nextHref: '../response/'
+        });
+        showPointsBtn.addEventListener('click', showScoreResult);
         playBtn.parentNode.appendChild(showPointsBtn);
 
-        const renderDescription = (description) => description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
-        const comboHtml = result.combos.length > 0
-          ? result.combos.map(c => `<div style="margin-top:4px">${renderDescription(c.description)}</div>`).join('')
-          : '<div style="margin-top:4px;color:#888">No combos matched</div>';
-
-        const scoreDialogOpts = {
-          width: 1638,
-          height: 1170,
-          anchor: 'center',
-          modal: false,
-          closable: true,
-          padding: { top: 270, right: 270, bottom: 280, left: 270 },
-          target: showPointsBtn,
-          title: 'Score Results',
-          content: `
-              ${comboHtml}
-          `,
-          background: { image: '../assets/dialog2.png' }
-        };
-        engine.dialogs.show('score-result', scoreDialogOpts);
+        showScoreResult();
       });
     }).catch(err => console.error('[Logging] Init failed:', err));
   </script>

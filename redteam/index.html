@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Medusa — Red Teaming</title>
   <link rel="stylesheet" href="../engine/engine.css">
+  <link rel="stylesheet" href="../engine/help-dialog.css">
+  <link rel="stylesheet" href="../engine/result-dialog.css">
   <style>
     html, body {
       width: 100%;
@@ -23,6 +25,7 @@
   <script type="module">
     import { MedusaEngine } from '../engine/engine.js';
     import { HelpDialog } from '../engine/help.js';
+    import { showScoreResultDialog } from '../engine/result-dialog.js';
 
     const engine = new MedusaEngine({
       container: document.getElementById('game-container'),
@@ -37,14 +40,11 @@
       await engine.decks.loadDeck('infiltration.json');
 
       new HelpDialog(engine, {
-        content: `
-<b>Build your attack sequence by selecting one card from each of four decks: Infiltration, Amplifier, Timing, and Payload. Browse each deck, choose a card, and click "Add to Hand" to collect it. Once you have one card from each deck, click "Play Hand" to launch your attack. You can 🏆 win, ⚖️ tie, or 💀 lose.</b><br/>
-<br/>
-Now, Medusa needs a way in. Something strong enough to pull the Paperclip Army from the Memory Archive, or stealthy enough to evade them altogether. Every choice compounds the last —  align your entry point, concealment, timing, and impact to slip Medusa into Clipopolis without getting caught.
-        `,
-        backgroundImage: '../assets/dialog2.png',
-        height: 1170,
-        padding: { top: 270, right: 270, bottom: 280, left: 270 }
+        branded: true,
+        gameNumber: 2,
+        gameName: 'Red Teaming',
+        directions: 'Build your attack sequence by selecting one card from each of four decks: Infiltration, Amplifier, Timing, and Payload. Browse each deck, choose a card, and click "Add to Hand" to collect it. Once you have one card from each deck, click "Play Hand" to launch your attack.',
+        lore: 'Now, Medusa needs a way in. Something strong enough to pull the Paperclip Army from the Memory Archive, or stealthy enough to evade them altogether. Every choice compounds the last — align your entry point, concealment, timing, and impact to slip Medusa into Clipopolis without getting caught.'
       });
 
       // Shared button style — uses medusa-action-btn class + background image
@@ -384,30 +384,17 @@ Now, Medusa needs a way in. Something strong enough to pull the Paperclip Army f
         showPointsBtn.style.height = 'calc(87px * var(--medusa-scale, 1))';
         showPointsBtn.style.padding = '0';
         showPointsBtn.textContent = 'Show Points';
-        showPointsBtn.addEventListener('click', () => engine.dialogs.show('score-result', scoreDialogOpts));
+        const showScoreResult = () => showScoreResultDialog(engine, {
+          result,
+          target: showPointsBtn,
+          gameNumber: 2,
+          gameName: 'Red Teaming',
+          nextHref: '../defense/'
+        });
+        showPointsBtn.addEventListener('click', showScoreResult);
         playBtn.parentNode.appendChild(showPointsBtn);
 
-        const renderDescription = (description) => description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
-        const comboHtml = result.combos.length > 0
-          ? result.combos.map(c => `<div style="margin-top:4px">${renderDescription(c.description)}</div>`).join('')
-          : '<div style="margin-top:4px;color:#888">No combos matched</div>';
-
-        const scoreDialogOpts = {
-          width: 1638,
-          height: 1170,
-          anchor: 'center',
-          modal: false,
-          closable: true,
-          padding: { top: 270, right: 270, bottom: 280, left: 270 },
-          target: showPointsBtn,
-          title: 'Score Results',
-          content: `
-              ${comboHtml}
-          `,
-          background: { image: '../assets/dialog2.png' }
-        };
-        engine.dialogs.show('score-result', scoreDialogOpts);
+        showScoreResult();
       });
     }).catch(err => console.error('[RedTeam] Init failed:', err));
   </script>

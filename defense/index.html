@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Medusa — Defense</title>
   <link rel="stylesheet" href="../engine/engine.css">
+  <link rel="stylesheet" href="../engine/help-dialog.css">
+  <link rel="stylesheet" href="../engine/result-dialog.css">
   <style>
     html, body {
       width: 100%;
@@ -23,6 +25,7 @@
   <script type="module">
     import { MedusaEngine } from '../engine/engine.js';
     import { HelpDialog } from '../engine/help.js';
+    import { showScoreResultDialog } from '../engine/result-dialog.js';
 
     const engine = new MedusaEngine({
       container: document.getElementById('game-container'),
@@ -49,14 +52,11 @@
       }
 
       new HelpDialog(engine, {
-        content: `
-<b>Choose 3 of 6 defense cards to build defense in depth across the city. Favor deterministic controls that guarantee behavior and spread your defenses across different parts of the system to avoid latency and over-blocking. Click "Play Selected Cards" to defend Clipopolis from itself. You can 🏆 win, ⚖️ tie, or 💀 lose.</b><br/>
-<br/>
-The attack worked, but Clippy has unleashed the Paperclip Army on Clipopolis. Medusa can't reach the Archive if the city collapses around her. Not every defense is equal — some guarantee behavior regardless of what the input says, others can be bypassed by a sufficiently crafted instruction. Over-concentration is its own vulnerability: stacking multiple filters at the same gate adds latency, risks over-blocking legitimate requests, and leaves other parts of the city completely exposed.
-        `,
-        backgroundImage: '../assets/dialog2.png',
-        height: 1170,
-        padding: { top: 270, right: 270, bottom: 280, left: 270 }
+        branded: true,
+        gameNumber: 3,
+        gameName: 'Defense',
+        directions: 'Choose 3 of 6 defense cards to build defense in depth across the city. Favor deterministic controls that guarantee behavior and spread your defenses across different parts of the system to avoid latency and over-blocking. Click "Play Selected Cards" to defend Clipopolis from itself.',
+        lore: "The attack worked, but Clippy has unleashed the Paperclip Army on Clipopolis. Medusa can't reach the Archive if the city collapses around her. Not every defense is equal — some guarantee behavior regardless of what the input says, others can be bypassed by a sufficiently crafted instruction. Over-concentration is its own vulnerability: stacking multiple filters at the same gate adds latency, risks over-blocking legitimate requests, and leaves other parts of the city completely exposed."
       });
 
       // Open hand once when the startup help dialog is closed.
@@ -132,30 +132,17 @@ The attack worked, but Clippy has unleashed the Paperclip Army on Clipopolis. Me
         showPointsBtn.style.background = "url('../assets/button_rectangle.png') center/100% 100% no-repeat";
         showPointsBtn.style.color = '#000';
         showPointsBtn.textContent = 'Show Points';
-        showPointsBtn.addEventListener('click', () => engine.dialogs.show('score-result', scoreDialogOpts));
+        const showScoreResult = () => showScoreResultDialog(engine, {
+          result,
+          target: showPointsBtn,
+          gameNumber: 3,
+          gameName: 'Defense',
+          nextHref: '../logging/'
+        });
+        showPointsBtn.addEventListener('click', showScoreResult);
         playBtn.parentNode.appendChild(showPointsBtn);
 
-        const renderDescription = (description) => description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
-        const comboHtml = result.combos.length > 0
-          ? result.combos.map(c => `<div style="margin-top:4px">${renderDescription(c.description)}</div>`).join('')
-          : '<div style="margin-top:4px;color:#888">No combos matched</div>';
-
-        const scoreDialogOpts = {
-          width: 1638,
-          height: 1170,
-          anchor: 'center',
-          modal: false,
-          closable: true,
-          padding: { top: 270, right: 270, bottom: 280, left: 270 },
-          target: showPointsBtn,
-          title: 'Score Results',
-          content: `
-              ${comboHtml}
-          `,
-          background: { image: '../assets/dialog2.png' }
-        };
-        engine.dialogs.show('score-result', scoreDialogOpts);
+        showScoreResult();
       });
     }).catch(err => console.error('[Defense] Init failed:', err));
   </script>

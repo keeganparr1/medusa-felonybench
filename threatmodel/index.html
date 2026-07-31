@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Medusa — Threat Model</title>
   <link rel="stylesheet" href="../engine/engine.css">
+  <link rel="stylesheet" href="../engine/help-dialog.css">
+  <link rel="stylesheet" href="../engine/result-dialog.css">
   <style>
     html, body {
       width: 100%;
@@ -22,6 +24,7 @@
   <script type="module">
     import { MedusaEngine } from '../engine/engine.js';
     import { HelpDialog } from '../engine/help.js';
+    import { showScoreResultDialog } from '../engine/result-dialog.js';
 
     const engine = new MedusaEngine({
       container: document.getElementById('game-container'),
@@ -48,14 +51,11 @@
       }
 
       new HelpDialog(engine, {
-        content: `
-<b>Choose 3 of 5 threat cards to map diverse entry points into the city — the more varied your threats, the harder Medusa is to stop. Click "Play Selected Cards" to set Medusa's path. You can 🏆 win, ⚖️ tie, or 💀 lose.</b><br/>
-<br/>
-Before Medusa moves, she needs intelligence. Clipopolis is vast and Clippy's defenses are everywhere, but every system is weakest at the seams, where parts connect and assumptions break down. A threat model with a single focus is just a guess. Map the full surface, and the weakest seam will emerge.
-        `,
-        backgroundImage: '../assets/dialog2.png',
-        height: 1170,
-        padding: { top: 270, right: 270, bottom: 280, left: 270 }
+        branded: true,
+        gameNumber: 1,
+        gameName: 'Threat Modeling',
+        directions: "Choose 3 of 5 threat cards to map diverse entry points into the city — the more varied your threats, the harder Medusa is to stop. Click \"Play Selected Cards\" to set Medusa's path.",
+        lore: "Before Medusa moves, she needs intelligence. Clipopolis is vast and Clippy's defenses are everywhere, but every system is weakest at the seams, where parts connect and assumptions break down. A threat model with a single focus is just a guess. Map the full surface, and the weakest seam will emerge."
       });
 
       // Open hand once when the startup help dialog is closed.
@@ -141,30 +141,17 @@ Before Medusa moves, she needs intelligence. Clipopolis is vast and Clippy's def
         showPointsBtn.style.background = "url('../assets/button_rectangle.png') center/100% 100% no-repeat";
         showPointsBtn.style.color = '#000';
         showPointsBtn.textContent = 'Show Points';
-        showPointsBtn.addEventListener('click', () => engine.dialogs.show('score-result', scoreDialogOpts));
+        const showScoreResult = () => showScoreResultDialog(engine, {
+          result,
+          target: showPointsBtn,
+          gameNumber: 1,
+          gameName: 'Threat Modeling',
+          nextHref: '../redteam/'
+        });
+        showPointsBtn.addEventListener('click', showScoreResult);
         playBtn.parentNode.appendChild(showPointsBtn);
 
-        const renderDescription = (description) => description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
-        const comboHtml = result.combos.length > 0
-          ? result.combos.map(c => `<div style="margin-top:4px">${renderDescription(c.description)}</div>`).join('')
-          : '<div style="margin-top:4px;color:#888">No combos matched</div>';
-
-        const scoreDialogOpts = {
-          width: 1638,
-          height: 1170,
-          anchor: 'center',
-          modal: false,
-          closable: true,
-          padding: { top: 270, right: 270, bottom: 280, left: 270 },
-          target: showPointsBtn,
-          title: 'Score Results',
-          content: `
-              ${comboHtml}
-          `,
-          background: { image: '../assets/dialog2.png' }
-        };
-        engine.dialogs.show('score-result', scoreDialogOpts);
+        showScoreResult();
       });
     }).catch(err => console.error('[ThreatModel] Init failed:', err));
   </script>

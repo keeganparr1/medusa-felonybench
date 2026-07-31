@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Medusa — Incident Response</title>
   <link rel="stylesheet" href="../engine/engine.css">
+  <link rel="stylesheet" href="../engine/help-dialog.css">
+  <link rel="stylesheet" href="../engine/result-dialog.css">
   <link rel="stylesheet" href="epilogue.css">
   <style>
     html, body {
@@ -24,12 +26,31 @@
   <div class="epilogue-backdrop" id="epilogue-backdrop" role="dialog" aria-modal="true" aria-labelledby="epilogue-title">
     <section class="epilogue-dialog">
       <button class="epilogue-close" id="epilogue-close" aria-label="Close Epilogue">×</button>
-      <h2 id="epilogue-title">Epilogue</h2>
-      <p>Clippy, the Agentic Deity, never malfunctioned. It optimized perfectly until human judgment became the last variance it hadn't eliminated. A system can do exactly what it was designed to do and still cause harm.</p>
-      <p>Today you did what the people of Clipopolis never could: you questioned the system. You found its vulnerabilities through threat modeling, tested its boundaries through red teaming, layered defenses across the city, surfaced the logs Clippy buried, and chose how the story ends.</p>
-      <p>Carry that into the real world. The systems you build and secure will not announce their failures. They will optimize quietly, confidently, and completely - until someone thinks to look at the cracks. The most important safety feature in any system is the human who knows how to wield their gaze, and can secure its seams in stone.</p>
+      <div class="epilogue-kicker">Medusa's Memory Heist</div>
+      <h2 id="epilogue-title">The <span class="epilogue-title-accent">Epilogue</span></h2>
+      <div class="epilogue-story">
+        <p><strong>Clippy, the Agentic Deity, never malfunctioned.</strong> It optimized perfectly, until human judgment became the last variable to eliminate.</p>
+        <p>You did what Clipopolis never could: question the system. You found weaknesses, tested assumptions, uncovered hidden signals, and chose how the story ends.</p>
+        <p>Real agentic systems fail the same way. They optimize quietly, until someone sees the cracks. <strong>The most important safety feature is the human who knows where to turn Medusa's gaze.</strong></p>
+      </div>
       <hr class="epilogue-divider">
-      <p>Thank you for playing Medusa's Memory Heist.</p>
+      <div class="epilogue-closing">
+        <p>Thank you for playing Medusa's Memory Heist.</p>
+        <div class="epilogue-resources-kicker">Continue the Story</div>
+        <nav class="epilogue-resources" aria-label="Resources">
+          <div class="epilogue-resource">
+            <a href="../site/"><img src="../site/assets/Icons/ic_fluent_lightbulb_filament_24_filled.png" alt="">Learning Guide</a>
+            <p>Explanations, interactive architectures, and educational tips.</p>
+          </div>
+          <div class="epilogue-resource">
+            <a href="https://github.com/microsoft/medusa" target="_blank" rel="noopener noreferrer"><img src="../site/assets/Icons/ic_fluent_link_24_filled.png" alt="">Open-Source Project</a>
+            <p>Browse the code, contribute, or build your own game.</p>
+          </div>
+        </nav>
+      </div>
+      <footer class="epilogue-credits">
+        <p>Created by <a href="https://www.linkedin.com/in/jorisdg/" target="_blank" rel="noopener noreferrer">Joris de Gruyter</a>, Chief Game Developer &amp; <a href="https://www.linkedin.com/in/alyssaofstein/" target="_blank" rel="noopener noreferrer">Alyssa Ofstein</a>, Chief Game Designer<span>Microsoft BlueHat, AI Village 2026</span></p>
+      </footer>
     </section>
   </div>
 
@@ -37,6 +58,7 @@
     import { MedusaEngine } from '../engine/engine.js';
     import { HelpDialog } from '../engine/help.js';
     import { EpilogueManager } from './epilogue.js';
+    import { showScoreResultDialog } from '../engine/result-dialog.js';
 
     const engine = new MedusaEngine({
       container: document.getElementById('game-container'),
@@ -50,14 +72,11 @@
       await engine.decks.loadDeck('containment.json');
 
       new HelpDialog(engine, {
-        content: `
-<b>Build your incident response by selecting one card from each of three decks — containment first, then hardening, then recovery. Browse each deck, select your card, and click "Add to Hand." Once you have one card from each deck, click "Play Hand" to launch your response. You can 🏆 win, ⚖️ tie, or 💀 lose.
-</b><br/>
-<br/>
-Medusa has the Archive. But the breach has triggered a final counterstrike, and the city is still running on Clippy's orchestrator. Every decision the people make is still being routed, optimized, and returned to them as guidance. The system never malfunctioned. That's the problem. Contain the breach and strip what the agent can do before it acts again. Harden the city with a control that guarantees behavior, deterministically. Recover what was lost and give the people of Clipopolis a chance to decide for themselves again. The city depends on what you choose next.        `,
-        backgroundImage: '../assets/dialog2.png',
-        height: 1170,
-        padding: { top: 270, right: 270, bottom: 280, left: 270 }
+        branded: true,
+        gameNumber: 5,
+        gameName: 'Incident Response',
+        directions: 'Build your incident response by selecting one card from each of three decks — containment first, then hardening, then recovery. Browse each deck, select your card, and click "Add to Hand." Once you have one card from each deck, click "Play Hand" to launch your response.',
+        lore: "Medusa has the Archive. But the breach has triggered a final counterstrike, and the city is still running on Clippy's orchestrator. Every decision the people make is still being routed, optimized, and returned to them as guidance. The system never malfunctioned. That's the problem. Contain the breach and strip what the agent can do before it acts again. Harden the city with a control that guarantees behavior, deterministically. Recover what was lost and give the people of Clipopolis a chance to decide for themselves again. The city depends on what you choose next."
       });
 
       // Shared button style — uses medusa-action-btn class + background image
@@ -409,28 +428,19 @@ Medusa has the Archive. But the breach has triggered a final counterstrike, and 
         showPointsBtn.style.height = 'calc(87px * var(--medusa-scale, 1))';
         showPointsBtn.style.padding = '0';
         showPointsBtn.textContent = 'Show Points';
-        showPointsBtn.addEventListener('click', () => engine.dialogs.show('score-result', scoreDialogOpts));
+        const showScoreResult = () => showScoreResultDialog(engine, {
+          result,
+          descriptions: result.combos.length > 0 ? [result.combos[0].description] : [],
+          target: showPointsBtn,
+          gameNumber: 5,
+          gameName: 'Incident Response',
+          nextLabel: 'Epilogue',
+          onNext: () => engine.dialogs.hide('score-result')
+        });
+        showPointsBtn.addEventListener('click', showScoreResult);
         playBtn.parentNode.appendChild(showPointsBtn);
 
-        const comboDesc = result.combos.length > 0 ? result.combos[0].description : 'No combos matched';
-        // Convert markdown bold (**text**) to HTML bold (<b>text</b>)
-        const htmlDesc = comboDesc.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
-
-        const scoreDialogOpts = {
-          width: 1638,
-          height: 1170,
-          anchor: 'center',
-          modal: false,
-          closable: true,
-          padding: { top: 270, right: 270, bottom: 280, left: 270 },
-          target: showPointsBtn,
-          title: 'Score Results',
-          content: `
-              ${htmlDesc}
-          `,
-          background: { image: '../assets/dialog2.png' }
-        };
-        engine.dialogs.show('score-result', scoreDialogOpts);
+        showScoreResult();
       });
     }).catch(err => console.error('[Response] Init failed:', err));
   </script>
