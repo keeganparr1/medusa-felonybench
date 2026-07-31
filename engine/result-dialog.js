@@ -15,7 +15,7 @@ const OUTCOMES = [
     marker: '💀',
     pattern: /you (?:lost|lose)/i,
     title: 'You lost.',
-    icon: '../site/assets/ic_fluent_skull_24_filled.png'
+    icon: '../site/assets/Icons/ic_fluent_skull_24_filled.png'
   }
 ];
 
