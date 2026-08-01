@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "name": "New Game",
+    "virtualWidth": 2816,
+    "virtualHeight": 1536
+  },
+  "background": {
+    "image": "../assets/background.png"
+  },
+  "overlays": [],
+  "zones": [],
+  "animations": [],
+  "decks": {
+    "width": 300,
+    "height": 440,
+    "flipOnSelect": false,
+    "hand": {
+      "button": { "label": "Hand" }
+    },
+    "front": {
+      "title": {
+        "visible": true,
+        "x": 38,
+        "y": 9,
+        "width": 217,
+        "height": 73,
+        "fontSize": 30,
+        "color": "#000000"
+      },
+      "description": {
+        "visible": true,
+        "x": 20,
+        "y": 120,
+        "width": 260,
+        "height": 310,
+        "fontSize": 36,
+        "color": "#ffffff"
+      }
+    }
+  }
+}

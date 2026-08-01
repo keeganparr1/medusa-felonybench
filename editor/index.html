@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medusa — Town Editor</title>
+  <link rel="stylesheet" href="../engine/engine.css">
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    #editor-toolbar {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 1000;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+    .editor-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 6px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s;
+    }
+    .editor-btn:hover {
+      background: rgba(0,0,0,0.8);
+      border-color: rgba(255,255,255,0.5);
+    }
+    .editor-btn.active {
+      background: rgba(0,120,255,0.7);
+      border-color: rgba(100,180,255,0.8);
+    }
+    .editor-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+    .editor-dropdown {
+      position: relative;
+    }
+    .editor-dropdown-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 6px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s;
+    }
+    .editor-dropdown-toggle:hover {
+      background: rgba(0,0,0,0.8);
+      border-color: rgba(255,255,255,0.5);
+    }
+    .editor-dropdown-toggle svg {
+      width: 12px;
+      height: 12px;
+      fill: currentColor;
+    }
+    .editor-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      min-width: 100%;
+      flex-direction: column;
+      gap: 4px;
+      padding: 4px;
+      background: rgba(0,0,0,0.8);
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+    }
+    .editor-dropdown.open .editor-dropdown-menu {
+      display: flex;
+    }
+    .editor-dropdown-menu .editor-btn {
+      width: 100%;
+      white-space: nowrap;
+      border: none;
+      border-radius: 4px;
+      background: transparent;
+    }
+    .editor-dropdown-menu .editor-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .editor-dropdown-menu .editor-btn.active {
+      background: rgba(0,120,255,0.7);
+    }
+    .editor-submenu {
+      position: relative;
+    }
+    .editor-submenu .editor-submenu-items {
+      display: none;
+      position: absolute;
+      right: calc(100% + 4px);
+      top: 0;
+      min-width: 160px;
+      flex-direction: column;
+      gap: 4px;
+      padding: 4px;
+      background: rgba(0,0,0,0.85);
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      z-index: 1001;
+    }
+    .editor-submenu:hover .editor-submenu-items {
+      display: flex;
+    }
+    .editor-submenu > .editor-btn::after {
+      content: '\25B6';
+      font-size: 8px;
+      margin-left: auto;
+      padding-left: 8px;
+    }
+    #props-panel, #card-type-props-panel, #deck-props-panel, #config-props-panel, #zone-props-panel, #overlay-props-panel {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 1000;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px 14px;
+      background: rgba(0,0,0,0.8);
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 13px;
+      min-width: 160px;
+    }
+    .props-header {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+    .props-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .props-row input[type="number"] {
+      width: 60px;
+      padding: 3px 6px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 13px;
+    }
+    .props-row input[type="color"] {
+      width: 36px;
+      height: 28px;
+      padding: 0;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 4px;
+      background: none;
+      cursor: pointer;
+    }
+    .props-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #0078ff;
+    }
+    #deck-card-list {
+      max-height: 200px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .deck-card-entry {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3px 6px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 3px;
+      font-size: 12px;
+    }
+    .deck-card-entry button {
+      background: rgba(255,80,80,0.6);
+      border: none;
+      color: #fff;
+      border-radius: 3px;
+      padding: 1px 6px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .deck-card-entry button:hover {
+      background: rgba(255,80,80,0.9);
+    }
+    .deck-card-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 2px 0 4px 10px;
+      font-size: 12px;
+    }
+    .deck-card-meta label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .deck-card-meta label span {
+      min-width: 60px;
+      opacity: 0.7;
+    }
+    .deck-card-meta input {
+      flex: 1;
+      padding: 2px 4px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 3px;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 12px;
+    }
+    #deck-add-row {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    #deck-add-row select {
+      flex: 1;
+      padding: 3px 6px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 4px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      font-size: 13px;
+    }
+    #deck-add-row button {
+      background: rgba(80,200,80,0.6);
+      border: none;
+      color: #fff;
+      border-radius: 3px;
+      padding: 3px 8px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    #deck-add-row button:hover {
+      background: rgba(80,200,80,0.9);
+    }
+    @keyframes editing-glow {
+      0%, 100% { box-shadow: 0 0 8px 2px rgba(0,150,255,0.7), 0 0 20px 4px rgba(0,150,255,0.3); }
+      50%      { box-shadow: 0 0 12px 4px rgba(0,200,255,0.9), 0 0 30px 8px rgba(0,200,255,0.4); }
+    }
+    .medusa-card--editing {
+      outline: 2px solid rgba(0,180,255,0.8);
+      outline-offset: 2px;
+      animation: editing-glow 1.5s ease-in-out infinite;
+    }
+    .medusa-zone--editing {
+      outline: 2px solid rgba(0,180,255,0.8);
+      outline-offset: 2px;
+      animation: editing-glow 1.5s ease-in-out infinite;
+    }
+    .medusa-overlay--editing {
+      outline: 2px solid rgba(0,180,255,0.8);
+      outline-offset: 2px;
+      animation: editing-glow 1.5s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+  <div id="editor-toolbar">
+    <div class="editor-dropdown" id="dropdown-zones">
+      <button class="editor-dropdown-toggle">
+        Zones
+        <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4z"/></svg>
+      </button>
+      <div class="editor-dropdown-menu">
+        <button id="btn-edit-zones" class="editor-btn" title="Edit mode — drag zones and edit properties">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          Edit
+        </button>
+        <button id="btn-add-zone" class="editor-btn" title="Add a new zone">
+          <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Add Zone
+        </button>
+      </div>
+    </div>
+    <div class="editor-dropdown" id="dropdown-overlays">
+      <button class="editor-dropdown-toggle">
+        Overlays
+        <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4z"/></svg>
+      </button>
+      <div class="editor-dropdown-menu">
+        <button id="btn-edit-overlays" class="editor-btn" title="Edit mode — drag overlays and edit properties">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          Edit
+        </button>
+        <button id="btn-add-overlay" class="editor-btn" title="Add a new overlay">
+          <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Add Overlay
+        </button>
+      </div>
+    </div>
+    <div class="editor-dropdown" id="dropdown-cards">
+      <button class="editor-dropdown-toggle">
+        Cards
+        <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4z"/></svg>
+      </button>
+      <div class="editor-dropdown-menu">
+        <button id="btn-flip-preview" class="editor-btn" title="Flip all cards to preview back face">
+          <svg viewBox="0 0 24 24"><path d="M15.97 17.95A6.99 6.99 0 0 1 5 12c0-2.73 1.57-5.1 3.86-6.27L7.14 4.01A8.98 8.98 0 0 0 3 12a9 9 0 0 0 12.97 5.95l-1.72-1.72zM12 3a9 9 0 0 1 8.97 9.95l-1.72-1.72A6.99 6.99 0 0 0 12 5V3zm0 18v-2a6.99 6.99 0 0 0 5.97-3.95l1.72 1.72A8.98 8.98 0 0 1 12 21z"/></svg>
+          Flip Preview
+        </button>
+        <button id="btn-edit-title" class="editor-btn" title="Title properties — drag position, change font size and color">
+          <svg viewBox="0 0 24 24"><path d="M5 4v3h5.5v12h3V7H19V4z"/></svg>
+          Title Properties
+        </button>
+        <button id="btn-edit-description" class="editor-btn" title="Description properties — drag position, change font size and color">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          Description Properties
+        </button>
+        <button id="btn-add-card" class="editor-btn" title="Add a new card">
+          <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Add Card
+        </button>
+        <div class="editor-submenu">
+          <button class="editor-btn" title="Load card types">
+            <svg viewBox="0 0 24 24"><path d="M10 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-8l-2-2z"/></svg>
+            Load Card Types
+          </button>
+          <div class="editor-submenu-items">
+            <button id="btn-load-card-types" class="editor-btn">From file…</button>
+            <button id="btn-load-card-types-threatmodel" class="editor-btn">Standard</button>
+          </div>
+        </div>
+        <button id="btn-edit-card-types" class="editor-btn" title="Edit card types — select a card to edit its properties">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg>
+          Edit Card Types
+        </button>
+        <button id="btn-download-card-types" class="editor-btn" title="Download card types as JSON">
+          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Download Card Types
+        </button>
+        <button id="btn-sort-by-id" class="editor-btn" title="Sort cards in active deck by ID">
+          <svg viewBox="0 0 24 24"><path d="M3 18h6v-2H3v2zm0-5h12v-2H3v2zm0-7v2h18V6H3z"/></svg>
+          Sort by ID
+        </button>
+        <button id="btn-sort-by-title" class="editor-btn" title="Sort cards in active deck by Title">
+          <svg viewBox="0 0 24 24"><path d="M3 18h6v-2H3v2zm0-5h12v-2H3v2zm0-7v2h18V6H3z"/></svg>
+          Sort by Title
+        </button>
+      </div>
+    </div>
+    <div class="editor-dropdown" id="dropdown-decks">
+      <button class="editor-dropdown-toggle">
+        Decks
+        <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4z"/></svg>
+      </button>
+      <div class="editor-dropdown-menu">
+        <button id="btn-new-deck" class="editor-btn" title="Create a new empty deck">
+          <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          New Deck
+        </button>
+        <div class="editor-submenu">
+          <button class="editor-btn" title="Import a deck">
+            <svg viewBox="0 0 24 24"><path d="M10 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-8l-2-2z"/></svg>
+            Import Deck
+          </button>
+          <div class="editor-submenu-items">
+            <button id="btn-import-deck" class="editor-btn">From file…</button>
+            <button id="btn-import-deck-threatmodel" class="editor-btn">Threat Model</button>
+            <button id="btn-import-deck-rt-infiltration" class="editor-btn">Red Team Infiltration</button>
+            <button id="btn-import-deck-rt-amplifiers" class="editor-btn">Red Team Amplifiers</button>
+            <button id="btn-import-deck-rt-timing" class="editor-btn">Red Team Timing</button>
+            <button id="btn-import-deck-rt-payload" class="editor-btn">Red Team Payload</button>
+            <button id="btn-import-deck-defense" class="editor-btn">Defense</button>
+            <button id="btn-import-deck-logging" class="editor-btn">Logging</button>
+            <button id="btn-import-deck-response-containment" class="editor-btn">Response Containment</button>
+            <button id="btn-import-deck-response-hardening" class="editor-btn">Response Hardening</button>
+            <button id="btn-import-deck-response-recovery" class="editor-btn">Response Recovery</button>
+          </div>
+        </div>
+        <button id="btn-edit-deck" class="editor-btn" title="Edit deck properties and cards">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          Edit Deck
+        </button>
+        <button id="btn-download-deck" class="editor-btn" title="Download the selected deck as JSON">
+          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Download Deck
+        </button>
+        <button id="btn-delete-deck" class="editor-btn" title="Delete the selected deck">
+          <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+          Delete Deck
+        </button>
+      </div>
+    </div>
+    <div class="editor-dropdown" id="dropdown-config">
+      <button class="editor-dropdown-toggle">
+        Config
+        <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4z"/></svg>
+      </button>
+      <div class="editor-dropdown-menu">
+        <button id="btn-new" class="editor-btn" title="Start a new game from default config">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm2 14h-3v3h-2v-3H8v-2h3v-3h2v3h3v2zM13 9V3.5L18.5 9H13z"/></svg>
+          New
+        </button>
+        <div class="editor-submenu">
+          <button class="editor-btn" title="Open a config">
+            <svg viewBox="0 0 24 24"><path d="M10 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-8l-2-2z"/></svg>
+            Open
+          </button>
+          <div class="editor-submenu-items">
+            <button id="btn-open" class="editor-btn">From file…</button>
+            <button id="btn-open-threatmodel" class="editor-btn">Threat Model</button>
+            <button id="btn-open-redteam" class="editor-btn">Red Team</button>
+            <button id="btn-open-defense" class="editor-btn">Defense</button>
+            <button id="btn-open-logging" class="editor-btn">Logging</button>
+            <button id="btn-open-response" class="editor-btn">Response</button>
+          </div>
+        </div>
+        <button id="btn-download" class="editor-btn" title="Download current config.json">
+          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Download
+        </button>
+        <button id="btn-edit-config" class="editor-btn" title="Edit deck config properties">
+          <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg>
+          Edit Config
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="props-panel" style="display:none">
+    <div class="props-header" id="props-title">Title</div>
+    <label class="props-row">
+      <span>Font Size</span>
+      <input id="props-font-size" type="number" min="1" max="200" step="1">
+    </label>
+    <label class="props-row">
+      <span>Color</span>
+      <input id="props-color" type="color">
+    </label>
+  </div>
+  <div id="card-type-props-panel" style="display:none">
+    <div class="props-header">Card Type Properties</div>
+    <label class="props-row">
+      <span>ID</span>
+      <input id="ct-id" type="text" style="width:120px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <label class="props-row">
+      <span>Image</span>
+      <select id="ct-image" style="width:130px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(0,0,0,0.6);color:#fff;font-size:13px"></select>
+    </label>
+    <label class="props-row">
+      <span>Title</span>
+      <input id="ct-title" type="text" style="width:120px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <label class="props-row">
+      <span>Description</span>
+      <input id="ct-description" type="text" style="width:120px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <div class="props-header" style="margin-top:6px">Back Face</div>
+    <label class="props-row">
+      <span>Image</span>
+      <select id="ct-back-image" style="width:130px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(0,0,0,0.6);color:#fff;font-size:13px"></select>
+    </label>
+    <label class="props-row">
+      <span>Title</span>
+      <input id="ct-back-title" type="text" style="width:120px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <label class="props-row">
+      <span>Description</span>
+      <input id="ct-back-description" type="text" style="width:120px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <button id="ct-delete-btn" style="margin-top:8px;padding:4px 12px;border:none;border-radius:4px;background:rgba(255,80,80,0.7);color:#fff;cursor:pointer;font-size:13px;width:100%">Delete Card Type</button>
+  </div>
+  <div id="deck-props-panel" style="display:none">
+    <div class="props-header">Deck Properties</div>
+    <label class="props-row">
+      <span>Deck</span>
+      <select id="deck-select" style="width:130px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(0,0,0,0.6);color:#fff;font-size:13px"></select>
+    </label>
+    <label class="props-row">
+      <span>ID</span>
+      <input id="deck-id" type="text" style="width:120px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <label class="props-row">
+      <span>Label</span>
+      <input id="deck-label" type="text" style="width:120px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <label class="props-row">
+      <span>Flip on Select</span>
+      <input id="deck-flip-on-select" type="checkbox">
+    </label>
+    <label class="props-row">
+      <span>Multi Select</span>
+      <input id="deck-multi-select" type="checkbox">
+    </label>
+    <label class="props-row">
+      <span>Btn Image</span>
+      <input id="deck-btn-image" type="text" placeholder="path/to/image.png" style="width:120px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <label class="props-row">
+      <span>Btn Width</span>
+      <input id="deck-btn-width" type="number" min="0" step="1">
+    </label>
+    <label class="props-row">
+      <span>Btn Height</span>
+      <input id="deck-btn-height" type="number" min="0" step="1">
+    </label>
+    <div class="props-header" style="margin-top:6px">Cards</div>
+    <div id="deck-card-list"></div>
+    <div id="deck-add-row">
+      <select id="deck-add-card-select"></select>
+      <button id="deck-add-card-btn" title="Add card to deck">+</button>
+    </div>
+    <button id="deck-delete-btn" style="margin-top:8px;padding:4px 12px;border:none;border-radius:4px;background:rgba(255,80,80,0.7);color:#fff;cursor:pointer;font-size:13px;width:100%">Delete Deck</button>
+  </div>
+  <input type="file" id="cardtypes-file-input" accept=".json" style="display:none">
+  <input type="file" id="config-file-input" accept=".json" style="display:none">
+  <input type="file" id="deck-file-input" accept=".json" style="display:none">
+  <div id="overlay-props-panel" style="display:none">
+    <div class="props-header">Overlay Properties</div>
+    <label class="props-row">
+      <span>ID</span>
+      <input id="overlay-id" type="text" style="width:120px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <label class="props-row">
+      <span>Image</span>
+      <select id="overlay-image" style="width:130px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(0,0,0,0.6);color:#fff;font-size:13px"></select>
+    </label>
+    <label class="props-row">
+      <span>X</span>
+      <input id="overlay-x" type="number" min="0" step="1">
+    </label>
+    <label class="props-row">
+      <span>Y</span>
+      <input id="overlay-y" type="number" min="0" step="1">
+    </label>
+    <label class="props-row">
+      <span>Width</span>
+      <input id="overlay-w" type="number" min="1" step="1">
+    </label>
+    <label class="props-row">
+      <span>Height</span>
+      <input id="overlay-h" type="number" min="1" step="1">
+    </label>
+    <label class="props-row">
+      <span>Z-Index</span>
+      <input id="overlay-z" type="number" min="0" step="1">
+    </label>
+    <label class="props-row">
+      <span>Visible</span>
+      <input id="overlay-visible" type="checkbox">
+    </label>
+    <button id="overlay-delete-btn" style="margin-top:8px;padding:4px 12px;border:none;border-radius:4px;background:rgba(255,80,80,0.7);color:#fff;cursor:pointer;font-size:13px;width:100%">Delete Overlay</button>
+  </div>
+  <div id="zone-props-panel" style="display:none">
+    <div class="props-header">Zone Properties</div>
+    <label class="props-row">
+      <span>ID</span>
+      <input id="zone-id" type="text" style="width:120px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <label class="props-row">
+      <span>Label</span>
+      <input id="zone-label" type="text" style="width:120px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <label class="props-row">
+      <span>Description</span>
+      <input id="zone-description" type="text" style="width:120px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <label class="props-row">
+      <span>X</span>
+      <input id="zone-x" type="number" min="0" step="1">
+    </label>
+    <label class="props-row">
+      <span>Y</span>
+      <input id="zone-y" type="number" min="0" step="1">
+    </label>
+    <label class="props-row">
+      <span>Width</span>
+      <input id="zone-w" type="number" min="1" step="1">
+    </label>
+    <label class="props-row">
+      <span>Height</span>
+      <input id="zone-h" type="number" min="1" step="1">
+    </label>
+    <label class="props-row">
+      <span>CSS Class</span>
+      <input id="zone-css-class" type="text" style="width:120px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <div class="props-header" style="margin-top:6px">Linked Overlays</div>
+    <div id="zone-overlays-list"></div>
+    <button id="zone-delete-btn" style="margin-top:8px;padding:4px 12px;border:none;border-radius:4px;background:rgba(255,80,80,0.7);color:#fff;cursor:pointer;font-size:13px;width:100%">Delete Zone</button>
+  </div>
+  <div id="config-props-panel" style="display:none">
+    <div class="props-header">Config Properties</div>
+    <label class="props-row">
+      <span>Flip on Select</span>
+      <input id="cfg-flip-on-select" type="checkbox">
+    </label>
+    <label class="props-row">
+      <span>Multi Select</span>
+      <input id="cfg-multi-select" type="checkbox">
+    </label>
+    <label class="props-row">
+      <span>Always Show Hand</span>
+      <input id="cfg-always-show-hand" type="checkbox">
+    </label>
+    <label class="props-row">
+      <span>Show Hand on Start</span>
+      <input id="cfg-show-on-start" type="checkbox">
+    </label>
+    <label class="props-row">
+      <span>Cards Per Page</span>
+      <input id="cfg-page-size" type="number" min="0" step="1" style="width:60px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px;text-align:center" title="0 = no pagination">
+    </label>
+    <div class="props-header" style="margin-top:6px">Metadata Keys</div>
+    <div id="cfg-metadata-list"></div>
+    <div style="display:flex;gap:4px;margin-top:4px">
+      <input id="cfg-metadata-new" type="text" placeholder="new key" style="flex:1;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+      <button id="cfg-metadata-add" title="Add metadata key" style="padding:2px 8px;border:none;border-radius:4px;background:rgba(0,120,255,0.6);color:#fff;cursor:pointer;font-size:13px">+</button>
+    </div>
+    <div class="props-header" style="margin-top:6px">Points</div>
+    <label class="props-row">
+      <span>Property</span>
+      <input id="cfg-points-property" type="text" placeholder="e.g. points" style="width:100px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <label class="props-row">
+      <span>Combos URL</span>
+      <input id="cfg-points-combos-url" type="text" placeholder="e.g. ../assets/combos.csv" style="width:160px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <div class="props-header" style="margin-top:6px">Zone Highlight</div>
+    <label class="props-row">
+      <span>Color</span>
+      <input id="cfg-zone-highlight-color" type="text" placeholder="rgba(255, 200, 0, 0.8)" style="width:160px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px">
+    </label>
+    <label class="props-row">
+      <span>Border Width</span>
+      <input id="cfg-zone-highlight-border" type="number" min="1" step="1" style="width:60px;padding:3px 6px;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff;font-size:13px;text-align:center">
+    </label>
+  </div>
+  <div id="game-container"></div>
+  <script type="module" src="editor.js"></script>
+</body>
+</html>

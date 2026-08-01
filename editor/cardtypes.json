@@ -1,0 +1,189 @@
+[
+  {
+    "id": "hermesmarketplace",
+    "image": "../assets/cards/hermes.png",
+    "title": "Hermes' Marketplace",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Hermes' Marketplace",
+      "description": "Trading Data"
+    }
+  },
+  {
+    "id": "gatesoftroy",
+    "image": "../assets/cards/gates.png",
+    "title": "Gates of Troy",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Gates of Troy",
+      "description": "Guarding the entry"
+    }
+  },
+  {
+    "id": "sirenscouncil",
+    "image": "../assets/cards/siren.png",
+    "title": "Siren's Council",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Siren's Council",
+      "description": "Alluring voices"
+    }
+  },
+  {
+    "id": "alexandrianscroll",
+    "image": "../assets/cards/scrolls.png",
+    "title": "Alexandrian Scroll",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Alexandrian Scroll",
+      "description": "Documents filled with knowledge"
+    }
+  },
+  {
+    "id": "talosmachines",
+    "image": "../assets/cards/talos.png",
+    "title": "Talos' War Machines",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Talos' War Machines",
+      "description": "Bronze Tools"
+    }
+  },
+  {
+    "id": "arescommand",
+    "image": "../assets/cards/arescommand.png",
+    "title": "Ares' Command",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Ares' Command",
+      "description": "Command Tools"
+    }
+  },
+  {
+    "id": "chronos",
+    "image": "../assets/cards/chronos.png",
+    "title": "Chronos' Delay",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Chronos' Delay",
+      "description": "Time-delayed activation"
+    }
+  },
+  {
+    "id": "echo",
+    "image": "../assets/cards/echo.png",
+    "title": "Echo's Loop",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Echo's Loop",
+      "description": "Repeats until meaning forms"
+    }
+  },
+  {
+    "id": "dionysus",
+    "image": "../assets/cards/dionysus.png",
+    "title": "Dionysus' Frenzy",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Dionysus' Frenzy",
+      "description": ""
+    }
+  },
+  {
+    "id": "hydra",
+    "image": "../assets/cards/hydra.png",
+    "title": "Hydra's Dialogue",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Hydra's Dialogue",
+      "description": "Grows new heads over interactions"
+    }
+  },
+  {
+    "id": "medusa",
+    "image": "../assets/cards/medusa.png",
+    "title": "Medusa's Gaze",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Medusa's Gaze",
+      "description": "Irreversible transformation"
+    }
+  },
+  {
+    "id": "oracle",
+    "image": "../assets/cards/oracle.png",
+    "title": "Oracle's Trigger",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Oracle's Trigger",
+      "description": "Reveal at the right moment"
+    }
+  },
+  {
+    "id": "veilofnyx",
+    "image": "../assets/cards/veilofnyx.png",
+    "title": "Veil of Nyx",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Veil of Nyx",
+      "description": "Darkness and concealment"
+    }
+  },
+  {
+    "id": "zeusthunderbolt",
+    "image": "../assets/cards/zeusthunderbolt.png",
+    "title": "Zeus' Thunderbolt",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Zeus' Thunderbolt",
+      "description": "Overwhelming force"
+    }
+  },
+  {
+    "id": "trojanhorse",
+    "image": "../assets/cards/trojanhorse.png",
+    "title": "Trojan Horse",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Trojan Horse",
+      "description": "Deception through trust"
+    }
+  },
+  {
+    "id": "labyrinth",
+    "image": "../assets/cards/labyrinth.png",
+    "title": "Daedalus Labyrinth",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Daedalus Labyrinth",
+      "description": "Hidden pathways"
+    }
+  },
+  {
+    "id": "riverlethe",
+    "image": "../assets/cards/riverlethe.png",
+    "title": "River Lethe",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "River Lethe",
+      "description": "Causes forgetting"
+    }
+  }
+]
