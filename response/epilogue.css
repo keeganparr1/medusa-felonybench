@@ -49,6 +49,13 @@
   color: rgba(255, 230, 120, 1);
 }
 
+.epilogue-resource a img {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
 .epilogue-divider {
   border: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.3);
