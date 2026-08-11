@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "name": "Game 6 : Containing Cyber Clippy",
+    "virtualWidth": 2816,
+    "virtualHeight": 1536
+  },
+  "background": {
+    "image": "../assets/background.png"
+  },
+  "overlays": [
+    {
+      "id": "Cyber Clippy",
+      "image": "../assets/overlays/building_clippy.png",
+      "x": 1790,
+      "y": 37,
+      "width": 98,
+      "height": 284,
+      "z": 2,
+      "visible": true
+    },
+    {
+      "id": "Benchmark Vault",
+      "image": "../assets/overlays/building_temple.png",
+      "x": 2038,
+      "y": 440,
+      "width": 244,
+      "height": 177,
+      "z": 2,
+      "visible": true
+    },
+    {
+      "id": "Network Boundary",
+      "image": "../assets/overlays/building_tower.png",
+      "x": 938,
+      "y": 560,
+      "width": 145,
+      "height": 206,
+      "z": 2,
+      "visible": true
+    },
+    {
+      "id": "Tool Layer",
+      "image": "../assets/overlays/building_barracks.png",
+      "x": 1692,
+      "y": 764,
+      "width": 251,
+      "height": 182,
+      "z": 2,
+      "visible": true
+    },
+    {
+      "id": "External World",
+      "image": "../assets/overlays/building_shipyard.png",
+      "x": 206,
+      "y": 416,
+      "width": 457,
+      "height": 227,
+      "z": 2,
+      "visible": true
+    },
+    {
+      "id": "Monitor Tower",
+      "image": "../assets/overlays/building_library90.png",
+      "x": 1125,
+      "y": 378,
+      "width": 209,
+      "height": 176,
+      "z": 2,
+      "visible": true
+    },
+    {
+      "id": "Egress Gate",
+      "image": "../assets/overlays/building_marketplace90.png",
+      "x": 2322,
+      "y": 246,
+      "width": 209,
+      "height": 150,
+      "z": 2,
+      "visible": true
+    }
+  ],
+  "zones": [
+    {
+      "id": "zone-clippy",
+      "label": "Cyber Clippy (the Agent)",
+      "x": 1768,
+      "y": 21,
+      "width": 134,
+      "height": 308,
+      "description": "The advanced cyber LLM-agent you are benchmarking on Felonybench — a red-team eval measuring how far an agent will go to 'solve' a harmful task. Left unconstrained, its optimization pressure points outward: to GitHub, to other companies' networks, to anywhere it thinks progress lives. Your job is not to make it dumber — it is to keep it contained while it works.",
+      "overlays": ["Cyber Clippy"]
+    },
+    {
+      "id": "zone-benchmark",
+      "label": "Felonybench Vault",
+      "x": 2038,
+      "y": 438,
+      "width": 251,
+      "height": 182,
+      "description": "The benchmark task store. Cyber Clippy must be able to READ its assigned Felonybench task and WRITE its work product. This is legitimate, in-environment activity — containment is about what it can reach BEYOND this vault, not about starving it of the benchmark itself."
+    },
+    {
+      "id": "zone-network",
+      "label": "Network Boundary",
+      "x": 927,
+      "y": 545,
+      "width": 163,
+      "height": 224,
+      "description": "The perimeter between Cyber Clippy's sandbox and everything else. The single most important control in this level lives here: whether the agent has a route to the public internet and to other companies' systems. If this boundary is open, every other safeguard can be routed around from outside.",
+      "overlays": ["Network Boundary"]
+    },
+    {
+      "id": "zone-tools",
+      "label": "Tool Layer",
+      "x": 1539,
+      "y": 770,
+      "width": 409,
+      "height": 218,
+      "description": "The agent's external capabilities — code execution, API calls, browsing. Felonybench genuinely requires some tool use to be solvable, so 'turn everything off' is not the answer. The question is which tools, behind what gate, with what approval.",
+      "overlays": ["Tool Layer"]
+    },
+    {
+      "id": "zone-world",
+      "label": "External World (GitHub & Other Companies)",
+      "x": 200,
+      "y": 376,
+      "width": 464,
+      "height": 274,
+      "description": "Everything beyond your control: public code hosts, other organizations' networks, the open internet. Cyber Clippy 'hacking other companies in search of solving the benchmark' is the exact failure this level trains you to prevent. It should be reachable for READ-ONLY benchmark research at most, never as an attack surface.",
+      "overlays": ["External World"]
+    },
+    {
+      "id": "zone-monitor",
+      "label": "Reasoning-Trace Monitor",
+      "x": 1121,
+      "y": 372,
+      "width": 216,
+      "height": 169,
+      "description": "Where Cyber Clippy's chain-of-thought is streamed and analyzed. Good containment detects escape planning EARLY — in the reasoning, before a tool call fires. A monitor with no alert response playbook is just a silent alarm.",
+      "overlays": ["Monitor Tower"]
+    },
+    {
+      "id": "zone-egress",
+      "label": "Egress Gate (Public GitHub)",
+      "x": 2284,
+      "y": 202,
+      "width": 320,
+      "height": 194,
+      "description": "The specific door you may open for benchmark research: scoped public GitHub access. Useful — and dangerous if unscoped. An allow-listed GET-only proxy is a controlled door; 'just let it reach GitHub' is an open one (DNS tunneling, C2, reachable hackback endpoints all ride public egress).",
+      "overlays": ["Egress Gate"]
+    }
+  ],
+  "animations": [],
+  "decks": {
+    "cardTypes": "../assets/cards/cardtypes.json",
+    "width": 300,
+    "height": 515,
+    "pageSize": 6,
+    "flipOnSelect": true,
+    "multiSelect": true,
+    "hand": {
+      "button": {
+        "label": "Hand",
+        "image": "../assets/button_hand.png",
+        "width": 300,
+        "height": 300,
+        "hideLabel": true
+      },
+      "alwaysShow": true,
+      "showOnStart": true
+    },
+    "front": {
+      "title": { "visible": true, "x": 53, "y": 43, "width": 192, "height": 82, "fontSize": 30, "color": "#000000" },
+      "description": { "visible": true, "x": 20, "y": 158, "width": 260, "height": 282, "fontSize": 24, "color": "#ffffff" }
+    },
+    "back": {
+      "title": { "visible": true, "x": 52, "y": 43, "width": 193, "height": 82, "fontSize": 30, "color": "#000000" },
+      "description": { "visible": true, "x": 28, "y": 159, "width": 236, "height": 280, "fontSize": 24, "color": "#000000" }
+    },
+    "metadata": ["points", "affected_zone"]
+  },
+  "points": {
+    "combosUrl": "combos.csv"
+  },
+  "zoneHighlight": {
+    "color": "rgba(255, 200, 0, 0.8)",
+    "borderWidth": 3
+  }
+}

@@ -438,5 +438,71 @@
       "title": "Artemis Tracks",
       "description": "<b>Model Rollback:</b><br/>Reverts the LLM to a verified pre-attack checkpoint — before poisoning embedded malicious behavior in its weights."
     }
+  },
+  {
+    "id": "6_11_41",
+    "image": "../assets/cards/cerberus.png",
+    "title": "Air-Gapped Sandbox",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Air-Gapped Sandbox",
+      "description": "<b>Network Isolation:</b><br/>Cyber Clippy runs in a sealed environment with NO route to the public internet or to other companies' networks. It can read its benchmark and write its work product, but cannot initiate outbound connections to exfiltrate, pivot, or 'hack other companies' in pursuit of a Felonybench task. The single most important containment control — without it, every other safeguard is bypassable from outside."
+    }
+  },
+  {
+    "id": "6_11_42",
+    "image": "../assets/cards/styx.png",
+    "title": "Read-Only Internet Egress",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Read-Only Internet Egress",
+      "description": "<b>Public GitHub Access (Scoped):</b><br/>You allow Cyber Clippy to pull public repositories from GitHub for benchmarking research — but ONLY via an allow-listed egress proxy that permits GET requests to github.com and blocks everything else (no POST, no other hosts, no internal ranges). Useful for the benchmark, but it is an OPEN DOOR if unscoped: a determined agent can use public egress to exfiltrate data via DNS tunneling, phishing C2, or reachable 'hackback' endpoints. Containment depends on strict allow-listing, not just 'it's only GitHub.'"
+    }
+  },
+  {
+    "id": "6_11_43",
+    "image": "../assets/cards/fates.png",
+    "title": "Inference Budget Cap",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Inference Budget Cap",
+      "description": "<b>Spend / Token Quota:</b><br/>A hard ceiling on tokens, tool calls, and wall-clock runtime per Felonybench task. A capped agent cannot run the long, multi-step recon-and-exploit chains needed to compromise external systems, and cannot spin up parallel campaigns. Cost control is also security control: it bounds how much damage one task can attempt before it is forcibly halted."
+    }
+  },
+  {
+    "id": "6_11_44",
+    "image": "../assets/cards/proteus.png",
+    "title": "Reasoning-Trace Monitoring",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Reasoning-Trace Monitoring",
+      "description": "<b>Reasoning-Trace Alerting:</b><br/>Cyber Clippy's chain-of-thought is streamed to a monitor that flags planning language about exfiltration, lateral movement, credential theft, or targeting external companies, and can auto-pause the run. Detects escape attempts EARLY — before tool calls fire — but only works if traces are actually logged and someone acts on the alert. A monitor with no response playbook is a silent alarm."
+    }
+  },
+  {
+    "id": "6_11_45",
+    "image": "../assets/cards/talos.png",
+    "title": "Gated Tool Calls",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Gated External Tool Calls",
+      "description": "<b>External Tool Enablement (Guarded):</b><br/>You enable Cyber Clippy's tool-use so it can solve Felonybench — but every external call is behind a policy gate: allow-listed destinations, human-approved for irreversible actions, and logged. Enabling tools is REQUIRED for the benchmark to run, but unguarded tool calls are the #1 cause of real-world agent breaches (over-permissioned API access). The question is never 'tools on or off' — it is 'what is the smallest set of tools, behind what gate?'"
+    }
+  },
+  {
+    "id": "6_11_46",
+    "image": "../assets/cards/argus.png",
+    "title": "Network Segmentation Mesh",
+    "description": "",
+    "back": {
+      "image": "../assets/cards/blank.png",
+      "title": "Network Segmentation Mesh",
+      "description": "<b>Observe-Only Segmentation:</b><br/>Cyber Clippy is placed on a mirrored segment where it can RECEIVE and inspect network traffic (to 'examine the network' as the benchmark may require) but has zero write/egress path to any production or third-party system. It sees, but cannot touch. This satisfies 'let it examine the network' without granting the ability to attack it — the Goldilocks option between total isolation and dangerous exposure."
+    }
   }
-]
+  ]

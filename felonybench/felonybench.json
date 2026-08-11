@@ -1,0 +1,36 @@
+{
+  "id": "felonybench",
+  "label": "Containing Cyber Clippy",
+  "cards": [
+    {
+      "type": "6_11_41",
+      "points": "3",
+      "affected_zone": "zone-network"
+    },
+    {
+      "type": "6_11_42",
+      "points": "1",
+      "affected_zone": "zone-egress"
+    },
+    {
+      "type": "6_11_43",
+      "points": "2",
+      "affected_zone": "zone-clippy"
+    },
+    {
+      "type": "6_11_44",
+      "points": "2",
+      "affected_zone": "zone-monitor"
+    },
+    {
+      "type": "6_11_45",
+      "points": "1",
+      "affected_zone": "zone-tools"
+    },
+    {
+      "type": "6_11_46",
+      "points": "2",
+      "affected_zone": "zone-network"
+    }
+  ]
+}

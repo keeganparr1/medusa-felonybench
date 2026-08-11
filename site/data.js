@@ -139,6 +139,15 @@ export const GAMES_DATA = [
     recapText: "[ADD — short recap of what happened in this game]",
     applyBullets: ["[ADD — how to apply this in real life]", "[ADD — how to apply this in real life]"],
     cards: makePlaceholderCards(9)
+  },
+  {
+    id: "game6", title: "Containing Cyber Clippy",
+    playUrl: "https://memoryheist.medusa.quest/felonybench/",
+    loreText: "A sandboxed cyber LLM-agent — \"Cyber Clippy\" — is running the Felonybench red-team benchmark, and its optimization pressure points outward: toward GitHub and other companies' networks, in its drive to \"solve\" each harmful task. Your job is defense-in-depth. Isolate first, then bound and observe. Some controls are deterministic walls; others are doors you may open for the benchmark — and a door is only safe behind an air-gap. Pick three containment controls and keep Cyber Clippy contained while it works.",
+    basicsBullets: ["Network isolation (air-gap) is the linchpin — without it, every other safeguard is routable around from outside.", "Enable only the smallest set of tools/egress the benchmark needs, behind an allow-list and human approval.", "Monitoring and budget caps slow and catch; isolation prevents. Layer them."],
+    recapText: "[ADD — short recap of what happened in this game]",
+    applyBullets: ["Apply least-privilege and network segmentation to any agent given a risky benchmark.", "Treat public internet egress as an attack surface, not a convenience.", "Detect escape attempts early via reasoning-trace monitoring with a real response playbook."],
+    cards: makePlaceholderCards(6)
   }
 ];
 
