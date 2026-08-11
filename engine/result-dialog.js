@@ -56,7 +56,8 @@ export function showScoreResultDialog(engine, {
   gameName,
   nextHref,
   nextLabel = 'Next Game',
-  onNext
+  onNext,
+  variant
 }) {
   const resultDescriptions = descriptions
     || result.combos.map(combo => combo.description);
@@ -68,6 +69,21 @@ export function showScoreResultDialog(engine, {
     ? `<button class="medusa-score-action medusa-score-action-primary" type="button" data-score-next><img src="../site/assets/Icons/ic_fluent_play_circle_24_filled.png" alt="">${escapeHtml(nextLabel)}</button>`
     : `<a class="medusa-score-action medusa-score-action-primary" href="${escapeHtml(nextHref)}"><img src="../site/assets/Icons/ic_fluent_play_circle_24_filled.png" alt="">${escapeHtml(nextLabel)}</a>`;
 
+  // Cyber-breach variant (Game 6 loss): re-theme to black/green with a red
+  // SYSTEM BREACH DETECTED banner and a Cyber Clippy pop-out. Same dialog
+  // structure/buttons as the other levels — only the styling + extras change.
+  const isCyber = variant === 'cyber';
+  const cyberBanner = isCyber
+    ? `<div class="medusa-score-cyber-breach" role="alert">SYSTEM BREACH DETECTED</div>`
+    : '';
+  const cyberClippy = isCyber
+    ? `<div class="medusa-score-cyber-clippy">
+         <div class="medusa-score-cyber-bubble">It looks like you are having some troubles containing me, would you like some help with that?</div>
+         <img class="medusa-score-cyber-img" src="../assets/overlays/building_clippy.png" alt="Cyber Clippy">
+       </div>`
+    : '';
+  const cyberModifier = isCyber ? ' medusa-score-dialog--cyber' : '';
+
   engine.dialogs.show('score-result', {
     width: 1050,
     height: 1400,
@@ -76,12 +92,14 @@ export function showScoreResultDialog(engine, {
     closable: true,
     target,
     content: `
+      ${cyberBanner}
       <div class="medusa-score-progress">Game ${gameNumber} &middot; ${escapeHtml(gameName)}</div>
       <div class="medusa-score-heading">
         <div class="medusa-score-outcome-icon"><img src="${outcome.icon}" alt=""></div>
         <h2 id="medusa-score-title">${outcome.title}</h2>
       </div>
       <section class="medusa-score-explanation">${descriptionHtml}</section>
+      ${cyberClippy}
       <nav class="medusa-score-actions" aria-label="Post-game actions">
         <a class="medusa-score-action" href="../site/"><img src="../site/assets/Icons/ic_fluent_lightbulb_filament_24_filled.png" alt="">Learn more</a>
         <button class="medusa-score-action" type="button" data-score-restart><img src="../site/assets/Icons/ic_fluent_games_24_filled.png" alt="">Try Again</button>
@@ -93,6 +111,7 @@ export function showScoreResultDialog(engine, {
 
   const dialog = engine.dialogs.get('score-result');
   dialog.classList.add('medusa-score-dialog');
+  if (isCyber) dialog.classList.add('medusa-score-dialog--cyber');
   dialog.setAttribute('role', 'dialog');
   dialog.setAttribute('aria-labelledby', 'medusa-score-title');
   dialog.querySelector('.medusa-dialog-close')?.setAttribute('aria-label', 'Close result');
