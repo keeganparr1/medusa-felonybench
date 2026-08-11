@@ -153,8 +153,8 @@
   "animations": [],
   "decks": {
     "cardTypes": "../assets/cards/cardtypes.json",
-    "width": 300,
-    "height": 515,
+    "width": 360,
+    "height": 620,
     "pageSize": 6,
     "flipOnSelect": true,
     "multiSelect": true,
@@ -170,12 +170,12 @@
       "showOnStart": true
     },
     "front": {
-      "title": { "visible": true, "x": 53, "y": 30, "width": 192, "height": 70, "fontSize": 26, "color": "#000000" },
-      "description": { "visible": true, "x": 16, "y": 110, "width": 268, "height": 392, "fontSize": 19, "color": "#ffffff", "autoSize": true }
+      "title": { "visible": true, "x": 64, "y": 36, "width": 230, "height": 84, "fontSize": 30, "color": "#000000" },
+      "description": { "visible": true, "x": 20, "y": 132, "width": 320, "height": 472, "fontSize": 23, "color": "#ffffff", "autoSize": true }
     },
     "back": {
-      "title": { "visible": true, "x": 52, "y": 30, "width": 193, "height": 70, "fontSize": 26, "color": "#000000" },
-      "description": { "visible": true, "x": 20, "y": 110, "width": 256, "height": 392, "fontSize": 18, "color": "#000000", "autoSize": true }
+      "title": { "visible": true, "x": 62, "y": 36, "width": 232, "height": 84, "fontSize": 30, "color": "#000000" },
+      "description": { "visible": true, "x": 24, "y": 132, "width": 308, "height": 472, "fontSize": 22, "color": "#000000", "autoSize": true }
     },
     "metadata": ["points", "affected_zone"]
   },
