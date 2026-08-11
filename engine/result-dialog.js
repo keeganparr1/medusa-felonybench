@@ -76,7 +76,7 @@ export function showScoreResultDialog(engine, {
     closable: true,
     target,
     content: `
-      <div class="medusa-score-progress">Game ${gameNumber} of 5 &middot; ${escapeHtml(gameName)}</div>
+      <div class="medusa-score-progress">Game ${gameNumber} &middot; ${escapeHtml(gameName)}</div>
       <div class="medusa-score-heading">
         <div class="medusa-score-outcome-icon"><img src="${outcome.icon}" alt=""></div>
         <h2 id="medusa-score-title">${outcome.title}</h2>

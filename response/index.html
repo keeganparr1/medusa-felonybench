@@ -434,8 +434,8 @@
           target: showPointsBtn,
           gameNumber: 5,
           gameName: 'Incident Response',
-          nextLabel: 'Epilogue',
-          onNext: () => engine.dialogs.hide('score-result')
+          nextHref: '../felonybench/',
+          nextLabel: 'Next Game'
         });
         showPointsBtn.addEventListener('click', showScoreResult);
         playBtn.parentNode.appendChild(showPointsBtn);
