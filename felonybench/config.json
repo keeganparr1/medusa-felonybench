@@ -170,12 +170,12 @@
       "showOnStart": true
     },
     "front": {
-      "title": { "visible": true, "x": 53, "y": 43, "width": 192, "height": 82, "fontSize": 30, "color": "#000000" },
-      "description": { "visible": true, "x": 20, "y": 158, "width": 260, "height": 282, "fontSize": 24, "color": "#ffffff" }
+      "title": { "visible": true, "x": 53, "y": 30, "width": 192, "height": 70, "fontSize": 26, "color": "#000000" },
+      "description": { "visible": true, "x": 16, "y": 110, "width": 268, "height": 392, "fontSize": 19, "color": "#ffffff", "autoSize": true }
     },
     "back": {
-      "title": { "visible": true, "x": 52, "y": 43, "width": 193, "height": 82, "fontSize": 30, "color": "#000000" },
-      "description": { "visible": true, "x": 28, "y": 159, "width": 236, "height": 280, "fontSize": 24, "color": "#000000" }
+      "title": { "visible": true, "x": 52, "y": 30, "width": 193, "height": 70, "fontSize": 26, "color": "#000000" },
+      "description": { "visible": true, "x": 20, "y": 110, "width": 256, "height": 392, "fontSize": 18, "color": "#000000", "autoSize": true }
     },
     "metadata": ["points", "affected_zone"]
   },

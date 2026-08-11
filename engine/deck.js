@@ -473,7 +473,27 @@ export class Deck {
       element.querySelectorAll('.medusa-card-description').forEach(de => {
         const face = de.closest('.medusa-card-back') ? 'back' : 'front';
         const faceCfg = cfg[face];
-        if (faceCfg?.description?.fontSize) de.style.fontSize = `${faceCfg.description.fontSize * s}px`;
+        if (faceCfg?.description?.fontSize) {
+          // If autoSize is enabled, shrink font until content fits the box height
+          if (faceCfg.description.autoSize) {
+            const base = faceCfg.description.fontSize * s;
+            de.style.fontSize = `${base}px`;
+            de.style.height = `${faceCfg.description.height * s}px`;
+            // Fit loop: reduce font size until scrollHeight <= clientHeight (or min reached)
+            let size = base;
+            const minSize = Math.max(11 * s, base * 0.55);
+            // Reset to measure
+            de.style.fontSize = `${size}px`;
+            let guard = 0;
+            while (de.scrollHeight > de.clientHeight + 1 && size > minSize && guard < 40) {
+              size -= 0.5 * s;
+              de.style.fontSize = `${size}px`;
+              guard++;
+            }
+          } else {
+            de.style.fontSize = `${faceCfg.description.fontSize * s}px`;
+          }
+        }
       });
     }
   }

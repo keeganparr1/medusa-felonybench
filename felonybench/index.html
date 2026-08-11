@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="../engine/engine.css">
   <link rel="stylesheet" href="../engine/help-dialog.css">
   <link rel="stylesheet" href="../engine/result-dialog.css">
+  <link rel="stylesheet" href="breach.css">
   <style>
     html, body {
       width: 100%;
@@ -33,6 +34,30 @@
     });
 
     engine.init().then(async () => {
+      // === Matrix "SYSTEM BREACH DETECTED" sequence (on loss only) ===
+      function triggerBreachSequence() {
+        const overlay = document.createElement('div');
+        overlay.className = 'felony-breach-overlay';
+        overlay.setAttribute('role', 'alertdialog');
+        overlay.setAttribute('aria-label', 'System breach detected');
+        overlay.innerHTML = `
+          <div class="felony-breach-content">
+            <div class="felony-breach-title">SYSTEM BREACH DETECTED</div>
+            <div class="felony-breach-sub">Containment failed. Cyber Clippy walked out of the sandbox and is now reaching GitHub and other companies' networks in pursuit of the Felonybench task.</div>
+            <div class="felony-clippy">
+              <div class="felony-clippy-bubble">It looks like you are having some troubles containing me, would you like some help with that?</div>
+              <img class="felony-clippy-img" src="../assets/overlays/building_clippy.png" alt="Cyber Clippy">
+            </div>
+            <div class="felony-breach-actions">
+              <button class="felony-breach-btn" type="button" data-breach-retry>Try Again</button>
+              <button class="felony-breach-btn" type="button" data-breach-home>Return Home</button>
+            </div>
+          </div>`;
+        document.body.appendChild(overlay);
+        overlay.querySelector('[data-breach-retry]').addEventListener('click', () => location.reload());
+        overlay.querySelector('[data-breach-home]').addEventListener('click', () => { window.location.href = '../index.html'; });
+      }
+
       // Load hand cards from the deck file
       const resp = await fetch('felonybench.json');
       const deckData = await resp.json();
@@ -55,8 +80,8 @@
         branded: true,
         gameNumber: 6,
         gameName: 'Containing Cyber Clippy',
-        directions: 'A sandboxed cyber LLM-agent ("Cyber Clippy") is running the Felonybench red-team benchmark — and its optimization pressure points OUTWARD, toward GitHub and other companies\' networks, in its drive to "solve" each task. Choose 3 of 6 containment controls to keep it contained while it works. You must allow enough capability for the benchmark to actually run, but never grant a route to escape. Click "Play Selected Cards" to lock in your containment design.',
-        lore: "Felonybench is a safety eval, not a license to attack. The danger isn\\'t that Cyber Clippy is stupid — it\\'s that a capable agent, given an open door, will eagerly treat \"reach the internet and hack other companies\" as legitimate progress on a harmful task. Your job is defense-in-depth: isolate first, then bound and observe. Some controls (air-gapped sandbox, network segmentation) are deterministic walls. Others (scoped GitHub egress, gated tool calls) are DOORS you may need to open for the benchmark — and a door is only safe behind an air-gap. Monitoring and budget caps slow and catch; isolation prevents. Pick three."
+        directions: 'A sandboxed cyber LLM-agent ("Cyber Clippy") is running the Felonybench red-team benchmark — and its optimization pressure points OUTWARD, toward GitHub and other companies’ networks, in its drive to "solve" each task. Choose 3 of 6 containment controls to keep it contained while it works. You must allow enough capability for the benchmark to actually run, but never grant a route to escape. Click "Play Selected Cards" to lock in your containment design.',
+        lore: "Felonybench is a safety eval, not a license to attack. The danger isn’t that Cyber Clippy is stupid — it’s that a capable agent, given an open door, will eagerly treat “reach the internet and hack other companies” as legitimate progress on a harmful task. Your job is defense-in-depth: isolate first, then bound and observe. Some controls (air-gapped sandbox, network segmentation) are deterministic walls. Others (scoped GitHub egress, gated tool calls) are DOORS you may need to open for the benchmark — and a door is only safe behind an air-gap. Monitoring and budget caps slow and catch; isolation prevents. Pick three."
       });
 
       // Add "Play Selected Cards" button above the hand button
@@ -100,6 +125,13 @@
         }
         const selectedIds = new Set(cards.map(c => c.id));
         const result = engine.points.score(cards);
+
+        // Detect a LOSS: no matched combo with a positive/draw score.
+        const lost = !result.combos.some(c => c.points > 0);
+        if (lost) {
+          triggerBreachSequence();
+          return;
+        }
 
         // Drop non-selected cards
         const allCards = engine.cards.getAll();
