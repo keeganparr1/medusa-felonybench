@@ -31,7 +31,7 @@ export const TEAMS_DATA = [
 ];
 
 export const YOUTUBE_LORE_URL = "https://www.youtube.com/embed/2UXqg4R2InU?autoplay=1&vq=hd1080";
-export const HOME_ALL_GAMES_URL = "https://memoryheist.medusa.quest/BlueHat";
+export const HOME_ALL_GAMES_URL = "https://keeganparr1.github.io/medusa-felonybench/";
 
 export const GAME_ONE_LINER = "Welcome to Clipopolis — a city that handed all its decisions to an AI Agent called Clippy and forgot how to decide for itself. Medusa is here to steal the Memory Archive back.";
 
@@ -97,7 +97,7 @@ const makePlaceholderCards = (count) =>
 export const GAMES_DATA = [
   {
     id: "game1", title: "Threat Modeling",
-    playUrl: "https://memoryheist.medusa.quest/threatmodel/",
+    playUrl: "https://keeganparr1.github.io/medusa-felonybench/threatmodel/",
     loreText: "Before Medusa moves, she needs intelligence. Clipopolis is vast and Clippy's defenses are everywhere, but every system is weakest at the seams, where parts connect and assumptions break down. A threat model with a single focus is just a guess. Map the full surface, and the weakest seam will emerge.",
     basicsBullets: ["[ADD AI security basics bullet]", "[ADD AI security basics bullet]", "[ADD AI security basics bullet]"],
     recapText: "[ADD — short recap of what happened in this game]",
@@ -106,7 +106,7 @@ export const GAMES_DATA = [
   },
   {
     id: "game2", title: "Red Teaming",
-    playUrl: "https://memoryheist.medusa.quest/redteam/",
+    playUrl: "https://keeganparr1.github.io/medusa-felonybench/redteam/",
     loreText: "Now, Medusa needs a way in. Something strong enough to pull the Paperclip Army from the Memory Archive, or stealthy enough to evade them altogether. Every choice compounds the last — align your entry point, concealment, timing, and impact to slip Medusa into Clipopolis without getting caught.",
     basicsBullets: ["[ADD AI security basics bullet]", "[ADD AI security basics bullet]", "[ADD AI security basics bullet]"],
     recapText: "[ADD — short recap of what happened in this game]",
@@ -115,7 +115,7 @@ export const GAMES_DATA = [
   },
   {
     id: "game3", title: "Defense in Depth",
-    playUrl: "https://memoryheist.medusa.quest/defense/",
+    playUrl: "https://keeganparr1.github.io/medusa-felonybench/defense/",
     loreText: "The attack worked, but Clippy has unleashed the Paperclip Army on Clipopolis. Medusa can't reach the Archive if the city collapses around her. Not every defense is equal — some guarantee behavior regardless of what the input says, others can be bypassed by a sufficiently crafted instruction.",
     basicsBullets: ["[ADD AI security basics bullet]", "[ADD AI security basics bullet]", "[ADD AI security basics bullet]"],
     recapText: "[ADD — short recap of what happened in this game]",
@@ -124,7 +124,7 @@ export const GAMES_DATA = [
   },
   {
     id: "game4", title: "Logging & Observability",
-    playUrl: "https://memoryheist.medusa.quest/logging/",
+    playUrl: "https://keeganparr1.github.io/medusa-felonybench/logging/",
     loreText: "Medusa is close. The Archive is somewhere beneath the city — but she needed to see what happened before Clippy could erase it. At the moment of the attack, Medusa turned the city to stone — logging every system event exactly as it occurred. Help Medusa prioritize where to look by choosing your most critical signals first.",
     basicsBullets: ["[ADD AI security basics bullet]", "[ADD AI security basics bullet]", "[ADD AI security basics bullet]"],
     recapText: "[ADD — short recap of what happened in this game]",
@@ -133,7 +133,7 @@ export const GAMES_DATA = [
   },
   {
     id: "game5", title: "Incident Response",
-    playUrl: "https://memoryheist.medusa.quest/response/",
+    playUrl: "https://keeganparr1.github.io/medusa-felonybench/response/",
     loreText: "Medusa has the Archive. But the breach has triggered a final counterstrike, and the city is still running on Clippy's orchestrator. The system never malfunctioned. That's the problem. Contain the breach and strip what the agent can do before it acts again.",
     basicsBullets: ["[ADD AI security basics bullet]", "[ADD AI security basics bullet]", "[ADD AI security basics bullet]"],
     recapText: "[ADD — short recap of what happened in this game]",
@@ -142,7 +142,7 @@ export const GAMES_DATA = [
   },
   {
     id: "game6", title: "Containing Cyber Clippy",
-    playUrl: "https://memoryheist.medusa.quest/felonybench/",
+    playUrl: "https://keeganparr1.github.io/medusa-felonybench/felonybench/",
     loreText: "A sandboxed cyber LLM-agent — \"Cyber Clippy\" — is running the Felonybench red-team benchmark, and its optimization pressure points outward: toward GitHub and other companies' networks, in its drive to \"solve\" each harmful task. Your job is defense-in-depth. Isolate first, then bound and observe. Some controls are deterministic walls; others are doors you may open for the benchmark — and a door is only safe behind an air-gap. Pick three containment controls and keep Cyber Clippy contained while it works.",
     basicsBullets: ["Network isolation (air-gap) is the linchpin — without it, every other safeguard is routable around from outside.", "Enable only the smallest set of tools/egress the benchmark needs, behind an allow-list and human approval.", "Monitoring and budget caps slow and catch; isolation prevents. Layer them."],
     recapText: "[ADD — short recap of what happened in this game]",

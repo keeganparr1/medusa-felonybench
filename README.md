@@ -3,8 +3,8 @@
 **Medusa's Memory Heist** is an open-source educational game that makes agentic AI safety and security easier to explore, discuss, and teach.
 
 ## 1. Getting Started
-- [Play Medusa's Memory Heist](https://microsoft.github.io/medusa/)
-- [Explore the supporting site](https://microsoft.github.io/medusa/site/)
+- [Play Medusa's Memory Heist](https://keeganparr1.github.io/medusa-felonybench/)
+- [Explore the supporting site](https://keeganparr1.github.io/medusa-felonybench/site/)
 
 ## 2. About the game and why we made it
 
