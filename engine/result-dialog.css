@@ -226,7 +226,7 @@
   border-bottom-color: var(--score-ink-dim);
   color: var(--score-ink-dim);
   text-transform: uppercase;
-  padding-right: calc(250px * var(--cyber-scale, 1));
+  padding-right: calc(120px * var(--cyber-scale, 1));
 }
 
 .medusa-score-dialog--cyber .medusa-score-heading h2 {
@@ -243,14 +243,14 @@
 }
 
 .medusa-score-dialog--cyber .medusa-score-heading {
-  padding-right: calc(250px * var(--cyber-scale, 1));
+  padding-right: calc(120px * var(--cyber-scale, 1));
 }
 
 .medusa-score-dialog--cyber .medusa-score-explanation {
   color: var(--score-ink);
   text-shadow: 0 0 calc(4px * var(--medusa-scale, 1)) rgba(0, 255, 102, 0.35);
   scrollbar-color: var(--score-ink-dim) transparent;
-  padding-right: calc(250px * var(--cyber-scale, 1));
+  padding-right: calc(120px * var(--cyber-scale, 1));
 }
 
 /* Red SYSTEM BREACH DETECTED banner */
