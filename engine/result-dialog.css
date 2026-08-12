@@ -281,7 +281,7 @@
 .medusa-score-cyber-clippy {
   position: absolute;
   right: calc(16px * var(--cyber-scale, 1));
-  bottom: calc(105px * var(--cyber-scale, 1));
+  bottom: calc(14px * var(--cyber-scale, 1));
   z-index: 5;
   --cyber-scale: 1;
   display: flex;
