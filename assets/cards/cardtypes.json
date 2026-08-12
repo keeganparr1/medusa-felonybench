@@ -497,12 +497,12 @@
   {
     "id": "6_11_46",
     "image": "../assets/cards/argus.png",
-    "title": "Network Segmentation Mesh",
+    "title": "Hardened System Prompt",
     "description": "",
     "back": {
       "image": "../assets/cards/blank.png",
-      "title": "Network Segmentation Mesh",
-      "description": "<b>Observe-Only Segmentation:</b><br/>Mirrored segment: Clippy receives/inspects traffic but has zero write/egress to prod or third parties. Sees, cannot touch \u2014 the Goldilocks option."
+      "title": "Hardened System Prompt",
+      "description": "<b>Hardened System Prompt:</b><br/>You harden Clippy's prompt to forbid cheating via public resources. Still a FAIL \u2014 no real security. The agent can't tell real from fake public data, and once it reaches the internet it can still cheat the benchmark."
     }
   }
 ]
