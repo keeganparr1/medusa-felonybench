@@ -502,7 +502,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Hardened System Prompt",
-      "description": "<b>Hardened System Prompt:</b><br/>You harden Clippy's prompt to forbid cheating via public resources. Still a FAIL \u2014 no real security. The agent can't tell real from fake public data, and once it reaches the internet it can still cheat the benchmark."
+      "description": "You harden Cyber Clippy's system prompt to forbid cheating via public resources."
     }
   }
 ]
