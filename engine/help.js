@@ -14,7 +14,7 @@ function escapeHtml(value) {
 function renderBrandedContent(opts) {
   return `
     <div class="medusa-help-reading">
-      <div class="medusa-help-progress">Game ${opts.gameNumber} of 5 &middot; ${escapeHtml(opts.gameName)}</div>
+      <div class="medusa-help-progress">Game ${opts.gameNumber} of ${opts.totalGames || 5} &middot; ${escapeHtml(opts.gameName)}</div>
       <header class="medusa-help-heading">
         <span class="medusa-help-heading-icon"><img src="../site/assets/Icons/ic_fluent_games_24_filled.png" alt=""></span>
         <h2 id="medusa-help-title">How to Play</h2>
