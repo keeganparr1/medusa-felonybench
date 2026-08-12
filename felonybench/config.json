@@ -170,12 +170,12 @@
       "showOnStart": true
     },
     "front": {
-      "title": { "visible": true, "x": 64, "y": 36, "width": 230, "height": 84, "fontSize": 30, "color": "#000000" },
-      "description": { "visible": true, "x": 20, "y": 132, "width": 320, "height": 472, "fontSize": 23, "color": "#ffffff", "autoSize": true }
+      "title": { "visible": true, "x": 64, "y": 36, "width": 230, "height": 64, "fontSize": 30, "color": "#2a160c" },
+      "description": { "visible": true, "x": 24, "y": 150, "width": 312, "height": 440, "fontSize": 40, "color": "#2a160c", "scrollable": true }
     },
     "back": {
-      "title": { "visible": true, "x": 62, "y": 36, "width": 232, "height": 84, "fontSize": 30, "color": "#000000" },
-      "description": { "visible": true, "x": 24, "y": 132, "width": 308, "height": 472, "fontSize": 22, "color": "#000000", "autoSize": true }
+      "title": { "visible": true, "x": 62, "y": 36, "width": 232, "height": 64, "fontSize": 30, "color": "#2a160c" },
+      "description": { "visible": true, "x": 24, "y": 150, "width": 312, "height": 440, "fontSize": 40, "color": "#2a160c", "scrollable": true }
     },
     "metadata": ["points", "affected_zone"]
   },

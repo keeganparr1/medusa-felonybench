@@ -404,10 +404,48 @@ export class Deck {
     }
 
     if (faceCfg.description?.visible !== false && description) {
-      const descEl = document.createElement('div');
-      descEl.classList.add('medusa-card-description');
-      descEl.innerHTML = description;
-      container.appendChild(descEl);
+      // Scrollable description: wrap in a viewport with up/down buttons so long
+      // text stays at a readable font and scrolls instead of shrinking/clipping.
+      if (faceCfg.description.scrollable) {
+        const wrap = document.createElement('div');
+        wrap.classList.add('medusa-card-description-scroll');
+
+        const up = document.createElement('button');
+        up.type = 'button';
+        up.className = 'medusa-card-scroll-btn medusa-card-scroll-up';
+        up.innerHTML = '&#9650;';
+        up.setAttribute('aria-label', 'Scroll description up');
+
+        const viewport = document.createElement('div');
+        viewport.classList.add('medusa-card-description-viewport');
+
+        const descEl = document.createElement('div');
+        descEl.classList.add('medusa-card-description');
+        descEl.innerHTML = description;
+        viewport.appendChild(descEl);
+
+        const down = document.createElement('button');
+        down.type = 'button';
+        down.className = 'medusa-card-scroll-btn medusa-card-scroll-down';
+        down.innerHTML = '&#9660;';
+        down.setAttribute('aria-label', 'Scroll description down');
+
+        const stop = e => e.stopPropagation();
+        up.addEventListener('click', stop);
+        down.addEventListener('click', stop);
+        up.addEventListener('click', () => viewport.scrollBy({ top: -Math.max(40, viewport.clientHeight * 0.5), behavior: 'smooth' }));
+        down.addEventListener('click', () => viewport.scrollBy({ top: Math.max(40, viewport.clientHeight * 0.5), behavior: 'smooth' }));
+
+        wrap.appendChild(up);
+        wrap.appendChild(viewport);
+        wrap.appendChild(down);
+        container.appendChild(wrap);
+      } else {
+        const descEl = document.createElement('div');
+        descEl.classList.add('medusa-card-description');
+        descEl.innerHTML = description;
+        container.appendChild(descEl);
+      }
     }
   }
 
@@ -473,26 +511,28 @@ export class Deck {
       element.querySelectorAll('.medusa-card-description').forEach(de => {
         const face = de.closest('.medusa-card-back') ? 'back' : 'front';
         const faceCfg = cfg[face];
-        if (faceCfg?.description?.fontSize) {
-          // If autoSize is enabled, shrink font until content fits the box height
-          if (faceCfg.description.autoSize) {
-            const base = faceCfg.description.fontSize * s;
-            de.style.fontSize = `${base}px`;
-            de.style.height = `${faceCfg.description.height * s}px`;
-            // Fit loop: reduce font size until scrollHeight <= clientHeight (or min reached)
-            let size = base;
-            const minSize = Math.max(11 * s, base * 0.55);
-            // Reset to measure
+        if (!faceCfg?.description?.fontSize) return;
+        // Scrollable descriptions keep a fixed, readable font (no shrink).
+        if (faceCfg.description.scrollable) {
+          de.style.fontSize = `${faceCfg.description.fontSize * s}px`;
+          return;
+        }
+        if (faceCfg.description.autoSize) {
+          const base = faceCfg.description.fontSize * s;
+          de.style.fontSize = `${base}px`;
+          de.style.height = `${faceCfg.description.height * s}px`;
+          // Fit loop: reduce font size until scrollHeight <= clientHeight (or min reached)
+          let size = base;
+          const minSize = Math.max(11 * s, base * 0.55);
+          de.style.fontSize = `${size}px`;
+          let guard = 0;
+          while (de.scrollHeight > de.clientHeight + 1 && size > minSize && guard < 40) {
+            size -= 0.5 * s;
             de.style.fontSize = `${size}px`;
-            let guard = 0;
-            while (de.scrollHeight > de.clientHeight + 1 && size > minSize && guard < 40) {
-              size -= 0.5 * s;
-              de.style.fontSize = `${size}px`;
-              guard++;
-            }
-          } else {
-            de.style.fontSize = `${faceCfg.description.fontSize * s}px`;
+            guard++;
           }
+        } else {
+          de.style.fontSize = `${faceCfg.description.fontSize * s}px`;
         }
       });
     }
@@ -511,6 +551,14 @@ export class Deck {
   _layoutFace(faceEl, faceCfg, scale) {
     const titleEl = faceEl.querySelector('.medusa-card-title');
     if (titleEl) this._layoutTextBox(titleEl, faceCfg.title, scale);
+
+    // Scrollable descriptions: position the wrapper (the inner description
+    // stays in normal flow inside the scrolling viewport).
+    const scrollWrap = faceEl.querySelector('.medusa-card-description-scroll');
+    if (scrollWrap && faceCfg.description?.scrollable) {
+      this._layoutTextBox(scrollWrap, faceCfg.description, scale);
+      return;
+    }
 
     const descEl = faceEl.querySelector('.medusa-card-description');
     if (descEl) this._layoutTextBox(descEl, faceCfg.description, scale);

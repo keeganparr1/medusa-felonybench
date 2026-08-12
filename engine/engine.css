@@ -370,6 +370,66 @@
   display: block;
 }
 
+/* Scrollable description (opt-in via config description.scrollable) */
+.medusa-card-description-scroll {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  z-index: 6;
+}
+
+.medusa-card-description-viewport {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(60, 30, 10, 0.5) transparent;
+}
+
+.medusa-card-description-scroll .medusa-card-description {
+  position: static;
+  bottom: auto;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  min-height: 0;
+  opacity: 1;
+  overflow: visible;
+  display: block;
+  text-align: center;
+  color: #2a160c;
+  text-shadow: 0 1px 1px rgba(255, 240, 210, 0.5);
+  padding: calc(6px * var(--medusa-scale, 1)) calc(10px * var(--medusa-scale, 1));
+  box-sizing: border-box;
+}
+
+.medusa-card-scroll-btn {
+  position: absolute;
+  right: calc(3px * var(--medusa-scale, 1));
+  width: calc(26px * var(--medusa-scale, 1));
+  height: calc(26px * var(--medusa-scale, 1));
+  border: calc(1px * var(--medusa-scale, 1)) solid rgba(60, 30, 10, 0.6);
+  border-radius: calc(5px * var(--medusa-scale, 1));
+  background: rgba(40, 20, 8, 0.72);
+  color: #ffe9c8;
+  font-size: calc(13px * var(--medusa-scale, 1));
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 7;
+  padding: 0;
+}
+.medusa-card-scroll-btn:hover {
+  background: rgba(40, 20, 8, 0.92);
+}
+.medusa-card-scroll-up { top: calc(3px * var(--medusa-scale, 1)); }
+.medusa-card-scroll-down { bottom: calc(3px * var(--medusa-scale, 1)); }
+
 .medusa-card-text--editable {
   outline: 2px dashed rgba(0, 200, 255, 0.8);
   outline-offset: 2px;
