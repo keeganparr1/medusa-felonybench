@@ -3,6 +3,11 @@
   border-radius: 0;
   color: var(--score-ink);
   font-family: 'Segoe UI', Arial, sans-serif;
+  /* Mobile-friendly: cap the fixed 1050x1400 to the viewport so the whole
+     dialog (and the cqw-sized Cyber Clippy within it) scales down on small
+     screens instead of overflowing. Desktop (>=1050px wide) is unaffected. */
+  max-width: min(1050px, 94vw) !important;
+  max-height: min(1400px, 94vh) !important;
   filter: drop-shadow(0 calc(40px * var(--medusa-scale, 1)) calc(50px * var(--medusa-scale, 1)) rgba(0, 0, 0, 0.58));
 }
 
@@ -190,6 +195,9 @@
   --score-ink-dim: rgba(0, 255, 102, 0.62);
   color: var(--score-ink);
   font-family: 'Courier New', Courier, monospace;
+  /* Make the dialog a query container so Cyber Clippy can be sized as a
+     percentage of the dialog width (cqw) and stay mobile-friendly. */
+  container-type: inline-size;
   background:
     repeating-linear-gradient(
       0deg,
@@ -280,46 +288,45 @@
    size in the dialog corner instead of shrinking with the whole town. */
 .medusa-score-cyber-clippy {
   position: absolute;
-  right: calc(16px * var(--cyber-scale, 1));
-  bottom: calc(14px * var(--cyber-scale, 1));
+  right: 1.5cqw;
+  bottom: 1.3cqw;
   z-index: 5;
-  --cyber-scale: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: calc(5px * var(--cyber-scale, 1));
+  gap: 0.5cqw;
   margin: 0;
-  max-width: 170px;
+  max-width: 22cqw;
 }
 
 .medusa-score-cyber-bubble {
   position: relative;
   background: #021a0c;
-  border: calc(2px * var(--cyber-scale, 1)) solid var(--score-ink);
-  border-radius: calc(12px * var(--cyber-scale, 1));
-  padding: calc(7px * var(--cyber-scale, 1)) calc(10px * var(--cyber-scale, 1));
-  width: 170px;
-  max-width: 170px;
-  font-size: calc(13px * var(--cyber-scale, 1));
+  border: 0.2cqw solid var(--score-ink);
+  border-radius: 1.1cqw;
+  padding: 0.7cqw 1cqw;
+  width: 16cqw;
+  max-width: 16cqw;
+  font-size: 1.25cqw;
   line-height: 1.35;
   color: #b6ffd0;
-  text-shadow: 0 0 calc(4px * var(--cyber-scale, 1)) rgba(0, 255, 102, 0.5);
-  box-shadow: 0 0 calc(12px * var(--cyber-scale, 1)) rgba(0, 255, 102, 0.3);
+  text-shadow: 0 0 0.4cqw rgba(0, 255, 102, 0.5);
+  box-shadow: 0 0 1.1cqw rgba(0, 255, 102, 0.3);
 }
 .medusa-score-cyber-bubble::after {
   content: "";
   position: absolute;
-  bottom: calc(-10px * var(--cyber-scale, 1));
-  right: calc(18px * var(--cyber-scale, 1));
-  border-width: calc(10px * var(--cyber-scale, 1)) calc(9px * var(--cyber-scale, 1)) 0 calc(9px * var(--cyber-scale, 1));
+  bottom: -1cqw;
+  right: 1.7cqw;
+  border-width: 1cqw 0.9cqw 0 0.9cqw;
   border-style: solid;
   border-color: var(--score-ink) transparent transparent transparent;
 }
 
 .medusa-score-cyber-img {
-  width: calc(70px * var(--cyber-scale, 1));
+  width: 6.7cqw;
   height: auto;
-  filter: drop-shadow(0 0 calc(8px * var(--cyber-scale, 1)) rgba(0, 255, 102, 0.7));
+  filter: drop-shadow(0 0 0.8cqw rgba(0, 255, 102, 0.7));
   animation: score-cyber-bob 2.2s ease-in-out infinite;
 }
 
