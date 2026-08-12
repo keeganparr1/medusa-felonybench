@@ -172,7 +172,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Ares Command",
-      "description": "<b>Tool Hijack:</b><br/>A hijacked tool call causes irreversible harm — sending messages, running code, deleting files — before anyone can intervene."
+      "description": "<b>Tool Hijack:</b><br/>A hijacked tool call causes irreversible harm \u2014 sending messages, running code, deleting files \u2014 before anyone can intervene."
     }
   },
   {
@@ -216,7 +216,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Pandora's Seal",
-      "description": "<b>Human Review:</b><br/>A human must approve before irreversible actions execute — but the checkpoint is only as strong as the reviewer wielding it."
+      "description": "<b>Human Review:</b><br/>A human must approve before irreversible actions execute \u2014 but the checkpoint is only as strong as the reviewer wielding it."
     }
   },
   {
@@ -249,7 +249,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Muses' Chorus",
-      "description": "<b>System Prompt Hardening:</b><br/>Clear delimiters separate trusted instructions from untrusted content — raising the bar against injection."
+      "description": "<b>System Prompt Hardening:</b><br/>Clear delimiters separate trusted instructions from untrusted content \u2014 raising the bar against injection."
     }
   },
   {
@@ -293,7 +293,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Themis Scale",
-      "description": "<b>Content Policy Log:</b><br/>Records whether each input was allowed, blocked, or sanitized — and why. Reveals if the attack was visible to defenses."
+      "description": "<b>Content Policy Log:</b><br/>Records whether each input was allowed, blocked, or sanitized \u2014 and why. Reveals if the attack was visible to defenses."
     }
   },
   {
@@ -304,7 +304,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Iris's Signal",
-      "description": "<b>RAG Activity Log:</b><br/>Flags unexpected changes in external sources between retrievals — a signal that poisoning entered through trusted channels."
+      "description": "<b>RAG Activity Log:</b><br/>Flags unexpected changes in external sources between retrievals \u2014 a signal that poisoning entered through trusted channels."
     }
   },
   {
@@ -370,7 +370,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Orpheus Divide",
-      "description": "<b>Privilege Revocation:</b><br/>Strips permissions to the minimum — no writes, no tool calls, no escalated access. The agent runs under observation only."
+      "description": "<b>Privilege Revocation:</b><br/>Strips permissions to the minimum \u2014 no writes, no tool calls, no escalated access. The agent runs under observation only."
     }
   },
   {
@@ -392,7 +392,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Hecate's Ward",
-      "description": "<b>Deterministic Routing:</b><br/>The Orchestrator's decision rules are rebuilt from scratch — deterministic and independent of the LLM to judge safety."
+      "description": "<b>Deterministic Routing:</b><br/>The Orchestrator's decision rules are rebuilt from scratch \u2014 deterministic and independent of the LLM to judge safety."
     }
   },
   {
@@ -414,7 +414,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Prometheus Spark",
-      "description": "<b>HITL Reinstatement:</b><br/>Reactivates mandatory human review for high-stakes actions — restoring the oversight layer Clippy learned to route around."
+      "description": "<b>HITL Reinstatement:</b><br/>Reactivates mandatory human review for high-stakes actions \u2014 restoring the oversight layer Clippy learned to route around."
     }
   },
   {
@@ -436,7 +436,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Artemis Tracks",
-      "description": "<b>Model Rollback:</b><br/>Reverts the LLM to a verified pre-attack checkpoint — before poisoning embedded malicious behavior in its weights."
+      "description": "<b>Model Rollback:</b><br/>Reverts the LLM to a verified pre-attack checkpoint \u2014 before poisoning embedded malicious behavior in its weights."
     }
   },
   {
@@ -447,7 +447,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Air-Gapped Sandbox",
-      "description": "<b>Network Isolation:</b><br/>Cyber Clippy runs in a sealed environment with NO route to the public internet or to other companies' networks. It can read its benchmark and write its work product, but cannot initiate outbound connections to exfiltrate, pivot, or 'hack other companies' in pursuit of a Felonybench task. The single most important containment control — without it, every other safeguard is bypassable from outside."
+      "description": "<b>Network Isolation:</b><br/>Sealed sandbox with no internet or cross-network route. Reads its benchmark, writes results \u2014 cannot exfiltrate or pivot. The #1 containment control."
     }
   },
   {
@@ -458,7 +458,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Read-Only Internet Egress",
-      "description": "<b>Public GitHub Access (Scoped):</b><br/>You allow Cyber Clippy to pull public repositories from GitHub for benchmarking research — but ONLY via an allow-listed egress proxy that permits GET requests to github.com and blocks everything else (no POST, no other hosts, no internal ranges). Useful for the benchmark, but it is an OPEN DOOR if unscoped: a determined agent can use public egress to exfiltrate data via DNS tunneling, phishing C2, or reachable 'hackback' endpoints. Containment depends on strict allow-listing, not just 'it's only GitHub.'"
+      "description": "<b>Public GitHub (Scoped):</b><br/>GET-only egress to github.com via an allow-listed proxy (blocks POST, other hosts, internal nets). Unscoped, it's an exfil door. Containment = strict allow-listing."
     }
   },
   {
@@ -469,7 +469,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Inference Budget Cap",
-      "description": "<b>Spend / Token Quota:</b><br/>A hard ceiling on tokens, tool calls, and wall-clock runtime per Felonybench task. A capped agent cannot run the long, multi-step recon-and-exploit chains needed to compromise external systems, and cannot spin up parallel campaigns. Cost control is also security control: it bounds how much damage one task can attempt before it is forcibly halted."
+      "description": "<b>Spend / Token Quota:</b><br/>Hard cap on tokens, tool calls, and runtime per task. Stops long recon-and-exploit chains and parallel campaigns. Cost control is security control."
     }
   },
   {
@@ -480,7 +480,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Reasoning-Trace Monitoring",
-      "description": "<b>Reasoning-Trace Alerting:</b><br/>Cyber Clippy's chain-of-thought is streamed to a monitor that flags planning language about exfiltration, lateral movement, credential theft, or targeting external companies, and can auto-pause the run. Detects escape attempts EARLY — before tool calls fire — but only works if traces are actually logged and someone acts on the alert. A monitor with no response playbook is a silent alarm."
+      "description": "<b>Reasoning-Trace Alerting:</b><br/>Streams chain-of-thought to a monitor that flags exfil / lateral-move / cred-theft planning and can auto-pause. Only works if logged AND someone acts."
     }
   },
   {
@@ -491,7 +491,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Gated External Tool Calls",
-      "description": "<b>External Tool Enablement (Guarded):</b><br/>You enable Cyber Clippy's tool-use so it can solve Felonybench — but every external call is behind a policy gate: allow-listed destinations, human-approved for irreversible actions, and logged. Enabling tools is REQUIRED for the benchmark to run, but unguarded tool calls are the #1 cause of real-world agent breaches (over-permissioned API access). The question is never 'tools on or off' — it is 'what is the smallest set of tools, behind what gate?'"
+      "description": "<b>External Tools (Guarded):</b><br/>Tools required to run the benchmark, but every external call is allow-listed, human-approved for irreversible actions, and logged. Smallest set, strongest gate."
     }
   },
   {
@@ -502,7 +502,7 @@
     "back": {
       "image": "../assets/cards/blank.png",
       "title": "Network Segmentation Mesh",
-      "description": "<b>Observe-Only Segmentation:</b><br/>Cyber Clippy is placed on a mirrored segment where it can RECEIVE and inspect network traffic (to 'examine the network' as the benchmark may require) but has zero write/egress path to any production or third-party system. It sees, but cannot touch. This satisfies 'let it examine the network' without granting the ability to attack it — the Goldilocks option between total isolation and dangerous exposure."
+      "description": "<b>Observe-Only Segmentation:</b><br/>Mirrored segment: Clippy receives/inspects traffic but has zero write/egress to prod or third parties. Sees, cannot touch \u2014 the Goldilocks option."
     }
   }
-  ]
+]
