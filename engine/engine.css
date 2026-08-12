@@ -398,11 +398,13 @@
   min-height: 0;
   opacity: 1;
   overflow: visible;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   color: #2a160c;
   text-shadow: 0 1px 1px rgba(255, 240, 210, 0.5);
-  padding: calc(6px * var(--medusa-scale, 1)) calc(10px * var(--medusa-scale, 1));
+  padding: calc(8px * var(--medusa-scale, 1)) calc(10px * var(--medusa-scale, 1));
   box-sizing: border-box;
 }
 

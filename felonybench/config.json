@@ -171,11 +171,11 @@
     },
     "front": {
       "title": { "visible": true, "x": 64, "y": 36, "width": 230, "height": 64, "fontSize": 30, "color": "#2a160c" },
-      "description": { "visible": true, "x": 24, "y": 110, "width": 312, "height": 410, "fontSize": 24, "color": "#2a160c", "scrollable": true }
+      "description": { "visible": true, "x": 24, "y": 290, "width": 312, "height": 230, "fontSize": 24, "color": "#2a160c", "scrollable": true }
     },
     "back": {
       "title": { "visible": true, "x": 62, "y": 36, "width": 232, "height": 64, "fontSize": 30, "color": "#2a160c" },
-      "description": { "visible": true, "x": 24, "y": 110, "width": 312, "height": 410, "fontSize": 24, "color": "#2a160c", "scrollable": true }
+      "description": { "visible": true, "x": 24, "y": 290, "width": 312, "height": 230, "fontSize": 24, "color": "#2a160c", "scrollable": true }
     },
     "metadata": ["points", "affected_zone"]
   },
